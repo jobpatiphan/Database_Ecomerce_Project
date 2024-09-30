@@ -6,6 +6,11 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\WelcomeController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\CartController;
+
+Route::get('/cart', [CartController::class, 'view'])->name('cart.view');
+Route::post('/cart/add', [CartController::class, 'add'])->name('cart.add');
+
 
 // Product show route
 Route::get('/product/{productId}', [ProductController::class, 'show'])->name('product.show');

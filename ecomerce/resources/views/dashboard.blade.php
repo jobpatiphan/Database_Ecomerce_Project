@@ -62,11 +62,11 @@
                         <h2 class="text-2xl font-bold">Shop by Categories</h2>
                     </div>
 
-                    <div class="grid grid-cols-4 gap-4">
+                    <div class="grid grid-cols-4 gap-4 rounded-lg">
                         @foreach($products as $product)
-                            <div class="bg-gray-200 h-64 flex flex-col justify-between items-center p-4">
+                            <div class="bg-gray-200 h-96 flex flex-col justify-between items-center p-4 rounded-lg">
                                 <!-- Display Product Image -->
-                                <img src="{{ asset($product->photo) }}" alt="{{ $product->name }}" class="w-32 h-32 object-contain">
+                                <img src="{{ asset($product->photo) }}" alt="{{ $product->name }}" class="w-64 h-64 object-contain rounded-lg">
 
                                 <!-- Product Name -->
                                 <h3 class="text-lg font-semibold">{{ $product->name }}</h3>

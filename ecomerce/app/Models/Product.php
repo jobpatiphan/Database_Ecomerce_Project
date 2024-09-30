@@ -8,13 +8,17 @@ use Illuminate\Database\Eloquent\Model;
 class Product extends Model
 {
     use HasFactory; 
+    
+    // Change this to 'id' if that is the primary key in your products table
     protected $table = 'products'; 
-    protected $primaryKey = 'product_id';
+    protected $primaryKey = 'id'; // Update this line
+    
     protected $fillable = [
         'name',
         'price',
         'stock'
     ]; 
+    
     protected $casts = [ 
         'created_at' => 'datetime', 
         'updated_at' => 'datetime', 
@@ -22,11 +26,11 @@ class Product extends Model
 
     public function users_cart()
     {
-        return $this->belongsToMany(Product::class, 'cart_entry')
-        ->withPivot('total_price')
-        ->withPivot('product_amount')
-        ->withTimestamps();
+        return $this->belongsToMany(User::class, 'cart_entry')
+            ->withPivot('total_price', 'product_amount')
+            ->withTimestamps();
     }
+    
 
     public function users_wish_list()
     {
