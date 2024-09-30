@@ -18,13 +18,13 @@ Route::get('/product/{productId}', [ProductController::class, 'show'])->name('pr
 
 // Combined root route
 Route::get('/', function () {
-    return auth()->check() ? redirect('/dashboard') : app(WelcomeController::class)->index();
+    return auth()->check() ? redirect('/commercefootshop') : app(WelcomeController::class)->index();
 })->name('welcome');
 
 
 // Dashboard route with middleware
 Route::middleware(['auth', 'verified'])->group(function () {
-    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+    Route::get('/commercefootshop', [DashboardController::class, 'index'])->name('dashboard');
 });
 
 // Profile routes

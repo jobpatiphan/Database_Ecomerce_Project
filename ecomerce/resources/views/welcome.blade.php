@@ -52,33 +52,39 @@
                                 <p class="text-gray-700">${{ number_format($product->price, 2) }}</p>
 
                                 <!-- Link to Product Page -->
-                                <a href="{{ route('product.show', $product->id) }}" class="bg-black text-white px-4 py-2 rounded">
-                                    View Product
-                                </a>
+                                @if (Auth::check())
+                                    <a href="{{ route('product.show', $product->id) }}" class="bg-black text-white px-4 py-2 rounded">
+                                        View Product
+                                    </a>
+                                @else
+                                    <a href="{{ route('login') }}" class="bg-black text-white px-4 py-2 rounded">
+                                        Login to View Product
+                                    </a>
+                                @endif
                             </div>
                         @endforeach
                     </div>
 
                      <!-- Pagination Controls -->
-                    <div class="flex justify-center mt-4">
-                        <div class="flex space-x-2">
-                            @if ($products->onFirstPage())
-                                <span class="disabled cursor-not-allowed text-gray-400 font-bold px-4 py-2 rounded bg-gray-200">&larr; Previous</span>
-                            @else
-                                <a href="{{ $products->previousPageUrl() }}" class="text-white bg-black hover:bg-gray-700 px-4 py-2 rounded transition duration-200">
-                                    &larr; Previous
-                                </a>
-                            @endif
+                <div class="flex justify-center mt-4">
+                    <div class="flex space-x-2">
+                        @if ($products->onFirstPage())
+                            <span class="disabled cursor-not-allowed text-gray-400 font-bold px-4 py-2 rounded bg-gray-200">&larr; Previous</span>
+                        @else
+                            <a href="{{ $products->previousPageUrl() }}" class="text-white bg-black hover:bg-gray-700 px-4 py-2 rounded transition duration-200">
+                                &larr; Previous
+                            </a>
+                        @endif
 
-                            @if ($products->hasMorePages())
-                                <a href="{{ $products->nextPageUrl() }}" class="text-white bg-black hover:bg-gray-700 px-4 py-2 rounded transition duration-200">
-                                    Next &rarr;
-                                </a>
-                            @else
-                                <span class="disabled cursor-not-allowed text-gray-400 font-bold px-4 py-2 rounded bg-gray-200">Next &rarr;</span>
-                            @endif
-                        </div>
+                        @if ($products->hasMorePages())
+                            <a href="{{ $products->nextPageUrl() }}" class="text-white bg-black hover:bg-gray-700 px-4 py-2 rounded transition duration-200">
+                                Next &rarr;
+                            </a>
+                        @else
+                            <span class="disabled cursor-not-allowed text-gray-400 font-bold px-4 py-2 rounded bg-gray-200">Next &rarr;</span>
+                        @endif
                     </div>
+                </div>
 
 </section>
 
