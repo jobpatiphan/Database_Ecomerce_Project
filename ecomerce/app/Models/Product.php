@@ -23,8 +23,8 @@ class Product extends Model
     public function users_cart()
     {
         return $this->belongsToMany(Product::class, 'cart_entry')
-        ->withPivot('total_price');
-        ->withPivot('product_amount');
+        ->withPivot('total_price')
+        ->withPivot('product_amount')
         ->withTimestamps();
     }
 
@@ -37,7 +37,7 @@ class Product extends Model
     public function orders()
     {
         return $this->belongsToMany(Order::class, 'order_entry_products')
-        ->withPivot('product_amount');
+        ->withPivot('product_amount')
         ->withTimestamps();
     }
     //     public function productEntries(){ 
