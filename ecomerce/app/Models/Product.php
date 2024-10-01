@@ -9,7 +9,6 @@ class Product extends Model
 {
     use HasFactory; 
     protected $table = 'products'; 
-    protected $primaryKey = 'product_id';
     protected $fillable = [
         'name',
         'price',
@@ -37,7 +36,7 @@ class Product extends Model
     public function orders()
     {
         return $this->belongsToMany(Order::class, 'order_entry_products')
-        ->withPivot('product_amount');
+        ->withPivot('product_amount')
         ->withTimestamps();
     }
     //     public function productEntries(){ 

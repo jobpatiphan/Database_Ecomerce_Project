@@ -20,7 +20,7 @@ class CartController extends Controller
         public function index()
     {
         $userId = Auth::id();
-        $cartEntries =Auth::user()->with('products_in_cart')->get();
+        $cartEntries =Auth::user()->products_in_cart()->get(); //this get user+products
         return view('profile.cart', compact('cartEntries', 'userId'));
     }
     // public function index()

@@ -32,20 +32,15 @@
                                 <tr>
                                     <td colspan="5" class="text-center py-4">Your cart is empty.</td>
                                 </tr>
-                                <div class="col-span-4 bg-gray-100 p-6 shadow-lg rounded-lg">
-                                    <h2 class="text-lg font-semibold mb-4">Summary</h2>
-                                    <div class="flex justify-between py-2 border-t">
-                                        <span>Subtotal</span>
-                                        <span>$0</span>
-                                    </div>
-                                    <div class="flex justify-between py-2 border-t">
-                                        <span>Grand Total</span>
-                                        <span>$0</span>
-                                    </div>
-                                    <button class="w-full bg-black text-white py-2 mt-4 rounded">Proceed to Checkout</button>
-                                </div>
+                               
                                 @else
+                                @php $sum = 0; @endphp  <!-- Initialize the $sum variable -->
+
                                 @foreach ($cartEntries as $entry)
+
+                                    @php
+                                       $sum += (float) $entry->price * (float)$entry->pivot->product_amount;
+                                   @endphp
                                     <tr class="border-t">
                                         <td class="py-4">
                                             <div class="flex items-center">
@@ -60,11 +55,11 @@
                                         <td class="py-4">
                                             <div class="flex items-center">
                                                 <button class="px-2 py-1 border border-gray-300">-</button>
-                                                <input type="text" value="1" class="w-12 text-center border-t border-b border-gray-300 mx-2">
+                                                <input type="text" value="{{ $entry->pivot->product_amount }}" class="w-12 text-center border-t border-b border-gray-300 mx-2">
                                                 <button class="px-2 py-1 border border-gray-300">+</button>
                                             </div>
                                         </td>
-                                        <td class="py-4">{{ number_format($entry->price * $entry->product_amount, 2) }}</td>
+                                        <td class="py-4">{{ number_format((float)$entry->price * (float)$entry->pivot->product_amount, 2) }}</td>
                                         <td class="py-4">
                                             <button class="text-red-500">
                                                 <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -74,23 +69,23 @@
                                         </td>
                                     </tr>
                                 @endforeach
-                                    
-                                    
-                                @endif
                                 <td>
                                 <div class="col-span-4 bg-gray-100 p-6 shadow-lg rounded-lg">
                                         <h2 class="text-lg font-semibold mb-4">Summary</h2>
                                         <div class="flex justify-between py-2 border-t">
                                             <span>Subtotal</span>
-                                            <span>$200.00</span>
+                                            <span>{{ number_format($sum, 2) }}</span>
                                         </div>
                                         <div class="flex justify-between py-2 border-t">
                                             <span>Grand Total</span>
-                                            <span>$200.00</span>
+                                            <span>{{ number_format($sum, 2) }}</span>
                                         </div>
                                         <button class="w-full bg-black text-white py-2 mt-4 rounded">Proceed to Checkout</button>
                                     </div>
                                     </td>
+                                    
+                                @endif
+                                
                             </tbody>
                             </table>
 

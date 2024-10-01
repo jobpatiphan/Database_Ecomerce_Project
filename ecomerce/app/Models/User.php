@@ -54,8 +54,8 @@ class User extends Authenticatable
 
     public function products_in_cart()
     {
-        return $this->belongsToMany(User::class, 'cart_entry')
-            ->withPivot('total_price', 'product_amount')
+        return $this->belongsToMany(Product::class, 'cart_entry' , 'user_id' , 'product_id')
+            ->withPivot('product_amount')
             ->withTimestamps();
     }
     
