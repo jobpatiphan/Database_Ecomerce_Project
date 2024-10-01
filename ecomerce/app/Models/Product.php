@@ -20,13 +20,13 @@ class Product extends Model
         'updated_at' => 'datetime', 
     ]; 
 
-    public function users_cart()
+    public function user_carts()
     {
-        return $this->belongsToMany(Product::class, 'cart_entry')
-        ->withPivot('total_price');
-        ->withPivot('product_amount');
-        ->withTimestamps();
+        return $this->belongsToMany(Product::class, 'cart_entry', 'user_id', 'product_id')
+                    ->withPivot('total_price', 'product_amount')
+                    ->withTimestamps();
     }
+
 
     public function users_wish_list()
     {
