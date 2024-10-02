@@ -29,7 +29,7 @@ class Order extends Model
     }
     public function products_in_order()
     {
-        return $this->belongsToMany(Product::class, 'corder_entry_products' , 'order_id' , 'product_id')
+        return $this->belongsToMany(Product::class, 'order_entry_products' , 'order_id' , 'product_id')
                     ->withPivot('product_amount')
                     ->withTimestamps();
     }
