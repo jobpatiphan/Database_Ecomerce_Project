@@ -10,60 +10,48 @@ class User extends Authenticatable
 {
     use HasFactory, Notifiable;
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array<int, string>
-     */
-    //protected $primaryKey = 'user_id';
-
     protected $fillable = [
         'name',
         'email',
         'password',
-        'address',
         'birthdate',
         'profile_photo',
     ];
 
-    /**
-     * The attributes that should be hidden for serialization.
-     *
-     * @var array<int, string>
-     */
     protected $hidden = [
         'password',
         'remember_token',
     ];
 
-    /**
-     * The attributes that should be cast to native types.
-     *
-     * @var array<string, string>
-     */
     protected $casts = [
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
 
-     // Orders (One-to-Many with foreign key user_id)
+    // One-to-Many relationship with orders
     public function orders()
     {
         return $this->hasMany(Order::class, 'user_id');
     }
 
+    // Many-to-Many relationship for products in cart
     public function products_in_cart()
     {
-        return $this->belongsToMany(Product::class, 'cart_entry' , 'user_id' , 'product_id')
-            ->withPivot('product_amount','size')
+        return $this->belongsToMany(Product::class, 'cart_entry', 'user_id', 'product_id')
+            ->withPivot('product_amount', 'size')
             ->withTimestamps();
     }
-    
+
+    // Many-to-Many relationship for products in wishlist
     public function products_in_wish_list()
     {
-        return $this->belongsToMany(Product::class, 'wish_list_entry' , 'user_id' , 'product_id')
-        ->withTimestamps();
+        return $this->belongsToMany(Product::class, 'wish_list_entry', 'user_id', 'product_id')
+            ->withTimestamps();
     }
 
-    
+    // One-to-One relationship with address
+    public function address()
+    {
+        return $this->hasOne(Address::class, 'user_id');
+    }
 }
