@@ -55,6 +55,13 @@ Route::middleware('auth')->group(function () {
 });
 
 
+Route::get('/orders/{order}', [OrderController::class, 'getOrderEntries'])->name('order.show');
+
+Route::middleware('auth')->group(function () {
+    Route::post('/checkout', [OrderController::class, 'checkout'])->name('checkout');
+    Route::get('/order/success', [OrderController::class, 'orderSuccess'])->name('order.success');
+});
+
 Route::get('/cart', [CartController::class, 'index'])->name('profile.cart');
 
 //increase

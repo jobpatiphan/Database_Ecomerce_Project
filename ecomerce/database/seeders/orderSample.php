@@ -16,7 +16,9 @@ class orderSample extends Seeder
     {
         
         DB::table('orders')->insert([ 
-            ['id' =>1,'user_id' => 1,'total_price' => 80.00, 'created_at' => Carbon::now(), 'updated_at' => Carbon::now()]  
+            ['id' =>2,'user_id' => 1,'total_price' => 80.00, 'created_at' => Carbon::now(), 'updated_at' => Carbon::now()],
+            ['id' =>3,'user_id' => 1,'total_price' => 80.00, 'created_at' => Carbon::now(), 'updated_at' => Carbon::now()],
+            ['id' =>4,'user_id' => 1,'total_price' => 80.00, 'created_at' => Carbon::now(), 'updated_at' => Carbon::now()]  
         ]); 
     }
 }

@@ -6,12 +6,10 @@
             @foreach($orders as $order)
             <div class="flex justify-between items-center bg-white shadow-md rounded-lg p-4">
                 <div class="flex items-center">
-                    <img src="{{ $order->image }}" class="w-16 h-16 object-cover rounded-md" alt="{{ $order->product_name }}">
+                    
                     <div class="ml-4">
-                        <h4 class="font-semibold">{{ $order->product_name }}</h4>
-                        <p class="text-sm text-gray-600">Size: {{ $order->size }}</p>
-                        <p class="text-sm text-gray-600">Qty: {{ $order->quantity }}</p>
-                        <p class="font-bold">${{ $order->total_price }}</p>
+                        <h4 class="font-semibold">Order :{{ $order->id}}</h4>
+                        <p class="font-bold">Total price :{{ $order->total_price }}</p>
                     </div>
                 </div>
 
@@ -21,17 +19,16 @@
                     </p>
                     <p class="text-sm text-gray-500">{{ $order->status_message }}</p>
                 </div>
+                
 
                 <div>
-                    @if($order->status == 'Delivered')
-                        <button class="mt-2 bg-blue-500 text-white py-2 px-4 rounded">Write a Review</button>
-                    @else
-                        <button class="mt-2 bg-blue-500 text-white py-2 px-4 rounded">View Order</button>
-                        @if($order->status == 'In Process')
-                        <button class="mt-2 bg-red-500 text-white py-2 px-4 rounded">Cancel Order</button>
-                        @endif
-                    @endif
+                    
+                        <a href="{{ route('order.show', $order->id) }}">
+                            <button class="mt-2 bg-blue-500 text-white py-2 px-4 rounded">View Order</button>
+                        </a>
+                      
                 </div>
+                
             </div>
             @endforeach
         </div>
