@@ -104,7 +104,6 @@
             </div>
         </div>
 
-        <!-- Tabs Section -->
         <div x-data="{ activeTab: 'description' }" class="mt-8">
             <div class="flex space-x-4">
                 <button @click="activeTab = 'description'" :class="activeTab === 'description' ? 'border-b-4 border-black' : ''" class="pb-2 text-lg font-bold focus:outline-none">Description</button>
@@ -174,6 +173,6 @@
 
     <!-- Add AlpineJS for interactivity -->
     <script src="https://cdn.jsdelivr.net/npm/alpinejs@2.8.0/dist/alpine.min.js"></script>
-</x-app-layout>
-    </body>
+</body>
 </html>
+</x-app-layout>
