@@ -9,8 +9,11 @@ use App\Http\Controllers\WelcomeController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\WishlistController;
+use App\Http\Controllers\AddressController;
 
-Route::patch('/profile/address', [ProfileController::class, 'updateAddress'])->name('address.update');
+Route::put('/profile/address', [ProfileController::class, 'updateAddress'])->name('profile.updateAddress');
+
+
 
 
 Route::post('/wishlist/add', [WishlistController::class, 'addToWishlist'])->name('wishlist.add');

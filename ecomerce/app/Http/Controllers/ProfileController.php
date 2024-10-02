@@ -80,30 +80,36 @@ class ProfileController extends Controller
         return Redirect::to('/');
     }
 
-    /**
+     /**
      * Update the user's address.
      */
-    public function updateAddress(Request $request): RedirectResponse
+    public function updateAddress(Request $request)
     {
-        // Validate address input
         $request->validate([
-            'street' => 'required|string|max:255',
+            'address_number' => 'required|string|max:255',
+            'street' => 'nullable|string|max:255', // Make street optional
             'city' => 'required|string|max:255',
-            'state' => 'required|string|max:255',
-            'postal_code' => 'required|string|max:20',
-            'country' => 'required|string|max:100',
+            'province' => 'required|string|max:255',
+            'postal_code' => 'required|string|max:10',
         ]);
-
-        // Get the authenticated user
+    
+        // Retrieve the user's current address or create a new one
         $user = Auth::user();
-
-        // Update or create the address
-        $user->address()->updateOrCreate(
-            ['user_id' => $user->id], // Ensure the address is linked to the user
-            $request->only(['street', 'city', 'state', 'postal_code', 'country'])
-        );
-
-        // Redirect back with a success message
-        return back()->with('status', 'Address updated successfully!');
+    
+        // Combine the address parts
+        $address = $request->address_number;
+        if ($request->filled('street')) {
+            $address .= ', ' . $request->street;
+        }
+        $address .= ', ' . $request->city . ', ' . $request->province . ' ' . $request->postal_code;
+    
+        // Update the user's address
+        $user->address = $address;
+        $user->save();
+    
+        return redirect()->route('profile.edit')->with('success', 'Address updated successfully.');
     }
+    
+    
+
 }
