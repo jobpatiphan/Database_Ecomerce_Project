@@ -17,7 +17,7 @@
                     <div class="grid grid-cols-12 gap-4">
                     
                         <div class="col-span-8 bg-white p-6 shadow-lg rounded-lg">
-                            <table class="w-full">
+                            <table class="min-w-full">
                             <thead>
                                 <tr>
                                     <th class="text-left text-gray-600">Product</th>
