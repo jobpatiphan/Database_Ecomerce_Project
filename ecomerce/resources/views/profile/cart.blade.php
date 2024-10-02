@@ -44,10 +44,13 @@
                                     <tr class="border-t">
                                         <td class="py-4">
                                             <div class="flex items-center">
-                                                <div class="w-16 h-16 bg-gray-200"></div>
+                                                <div class="w-16 h-16 bg-gray-200">
+                                                <img src="{{ asset($entry->photo) }}" alt="{{ $entry->name }}" class="w-full h-auto rounded-lg">
+            
+                                                </div>
                                                 <div class="ml-4">
                                                     <p>{{ $entry->name }}</p>
-                                                    <p class="text-sm text-gray-500">size: 43</p>
+                                                    <p class="text-sm text-gray-500">size: {{ $entry->pivot->size }}</p>
                                                 </div>
                                             </div>
                                         </td>
