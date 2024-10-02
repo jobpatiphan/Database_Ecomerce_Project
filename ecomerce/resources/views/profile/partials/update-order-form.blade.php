@@ -10,6 +10,7 @@
                     <div class="ml-4">
                         <h4 class="font-semibold">Order :{{ $order->id}}</h4>
                         <p class="font-bold">Total price :{{ $order->total_price }}</p>
+                        <p class="font-bold">Time :{{ $order->created_at }}</p>
                     </div>
                 </div>
 

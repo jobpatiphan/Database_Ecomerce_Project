@@ -1,18 +1,37 @@
-<x-app-layout>   
-   <x-slot name="header">
-       <head>
-       <meta charset="utf-8">
-       <meta name="viewport" content="width=device-width, initial-scale=1">
-       <title>Foot Collection</title>
-       <link rel="preconnect" href="https://fonts.bunny.net">
-       <link href="https://fonts.bunny.net/css?family=figtree:400,600&display=swap" rel="stylesheet" />
-       @vite('resources/css/app.css')
-       <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.10.2/dist/cdn.min.js"></script>
-
-   </head>
-   </x-slot>
-
-   <main class="bg-gray-50 py-10">
+<x-app-layout>
+    <div class="container mx-auto px-4 py-8">
+        <div class="flex flex-col sm:flex-row sm:space-x-6">
+    <!-- Sidebar -->
+    <div class="w-full sm:w-1/4 bg-white shadow-lg rounded-lg p-6">
+                <div class="text-center">
+                    <div class="rounded-full mx-auto mb-4" alt="User Image">
+                        @include('profile.partials.update-profile-photo-form')
+                    </div>
+                    <h3 class="text-lg font-bold">{{ Auth::user()->name }}</h3>
+                    
+                    <p class="text-gray-600">Hello 👋</p>
+                </div>
+                <nav class="mt-8">
+                    <ul class="space-y-4">
+                        <li>
+                            <a href="{{route('profile.edit')}}" class="flex items-center p-2 text-gray-700 hover:bg-gray-100 rounded-lg">
+                                <span class="ml-3">Personal Information</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{route('profile.order')}}" class="flex items-center p-2 text-gray-700 hover:bg-gray-100 rounded-lg">
+                                <span class="ml-3">My Orders</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{ route('profile.wishList') }}" class="flex items-center p-2 bg-black text-white rounded-lg">
+                                <span class="ml-3">My Wishlists</span>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+   <main class="w-full sm:w-3/4 bg-white shadow-lg rounded-lg p-6 ">
                 <div class="container mx-auto">
                     <div class="grid grid-cols-12 gap-4">
                     
@@ -28,7 +47,7 @@
                 @else
                     @foreach ($wishListEntries as $entry)
                     
-                        <div class="border rounded-lg p-4 relative">
+                        <div class="border rounded-lg p-4 relative ">
                         <form action="{{ route('profile.dropWishlist') }}" method="POST">
                                                 @csrf
                                                 @method('DELETE') <!-- Spoof DELETE request -->
@@ -44,9 +63,11 @@
                                 <img src="{{ asset($entry->photo) }}" alt="{{ $entry->name }}" class="w-full h-auto rounded-lg">
             
                             </div>
+                            <div class="flex justify-center mt-4">
                             <a href="{{ route('product.show', $entry->id) }}" class="bg-black text-white px-4 py-2 rounded">
                                     View Product
                                 </a>
+                            </div>
                             <div class="text-center text-gray-500">
                                 <p class="text-lg font-semibold">{{ $entry->name }}</p>
                                 <p>${{ $entry->price }}</p>
@@ -64,6 +85,10 @@
                     </div>
                 </div>
             </main>
+            </div>
+        </div>
+        
+    
 </x-app-layout>
 
                     
