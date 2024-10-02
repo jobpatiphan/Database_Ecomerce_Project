@@ -7,13 +7,21 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\WelcomeController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\CartController;
+use App\Http\Controllers\WishlistController;
+
+Route::post('/wishlist/add', [WishlistController::class, 'addToWishlist'])->name('wishlist.add');
+Route::post('/wishlist/remove', [WishlistController::class, 'removeFromWishlist'])->name('wishlist.remove');
+
+
+
 
 Route::get('/cart', [CartController::class, 'view'])->name('cart.view');
 Route::post('/cart/add', [CartController::class, 'add'])->name('cart.add');
 
 
 // Product show route
-Route::get('/product/{productId}', [ProductController::class, 'show'])->name('product.show');
+Route::get('products/{productId}', [ProductController::class, 'show'])->name('product.show');
+
 
 
 // Combined root route

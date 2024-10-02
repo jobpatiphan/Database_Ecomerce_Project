@@ -41,15 +41,16 @@
 
                     <div class="grid grid-cols-4 gap-4">
                         @foreach($products as $product)
-                            <div class="bg-gray-200 h-64 flex flex-col justify-between items-center p-4">
+                        <div class="bg-gray-200 h-96 flex flex-col justify-between items-center p-4 rounded-lg">
                                 <!-- Display Product Image -->
-                                <img src="{{ asset($product->photo) }}" alt="{{ $product->name }}" class="w-32 h-32 object-contain">
+                                <img src="{{ asset($product->photo) }}" alt="{{ $product->name }}" class="w-64 h-64 object-contain rounded-lg">
 
                                 <!-- Product Name -->
                                 <h3 class="text-lg font-semibold">{{ $product->name }}</h3>
 
                                 <!-- Product Price -->
                                 <p class="text-gray-700">${{ number_format($product->price, 2) }}</p>
+
 
                                 <!-- Link to Product Page -->
                                 @if (Auth::check())

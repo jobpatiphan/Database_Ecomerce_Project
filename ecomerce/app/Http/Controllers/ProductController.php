@@ -1,27 +1,25 @@
 <?php
-
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
+use App\Models\Product;
 
 class ProductController extends Controller
 {
+    // Show method for displaying both product list and a specific product
     public function show($productId)
-{
-    // Use raw SQL to select the product based on id
-    $product = DB::select('SELECT * FROM products WHERE id = ?', [$productId]);
+    {
+        // Fetch the specific product by ID using Eloquent
+        $product = Product::find($productId);
 
-    // Check if the product was found
-    if (empty($product)) {
-        return redirect()->route('dashboard')->with('error', 'Product not found.');
+        // Check if the product was found
+        if (!$product) {
+            return redirect()->route('product.index')->with('error', 'Product not found.');
+        }
+
+        // Fetch paginated product list (for the index functionality)
+        $products = Product::simplePaginate(6); // Set the number of products per page
+
+        return view('product.show', compact('product', 'products'));
     }
-
-    // Assuming $product is an array, we can get the first item
-    $product = $product[0];
-
-    return view('product.show', compact('product'));
-    
-}
-
 }

@@ -30,19 +30,25 @@ class Product extends Model
             ->withPivot('total_price', 'product_amount')
             ->withTimestamps();
     }
-    
 
-    public function users_wish_list()
-    {
-        return $this->belongsToMany(Product::class, 'wish_list_entry')
-        ->withTimestamps();
-    }
 
     public function orders()
     {
         return $this->belongsToMany(Order::class, 'order_entry_products')
         ->withPivot('product_amount')
         ->withTimestamps();
+    }
+
+    public function users_wish_list()
+    {
+        return $this->belongsToMany(User::class, 'wish_list_entry')
+            ->withTimestamps();
+    }
+
+    // Method to check if the product is in the user's wishlist
+    public function isInWishlist(User $user)
+    {
+        return $this->users_wish_list()->where('user_id', $user->id)->exists();
     }
     //     public function productEntries(){ 
     //     return $this->belongsToMany(DiaryEntry::class, 'diary_entry_emotions') 
