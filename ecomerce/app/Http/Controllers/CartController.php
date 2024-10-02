@@ -57,49 +57,53 @@ class CartController extends Controller
         //knack...
     }
   
-      public function add(Request $request)
+    public function add(Request $request)
     {
         // Enable query logging
         \DB::enableQueryLog();
-
+    
         $user = Auth::user();  // Get the authenticated user
-
+    
         // Check if the user is authenticated
         if (!$user) {
             return redirect()->back()->with('error', 'You must be logged in to add items to the cart.');
         }
-
-        // Get product and quantity
+    
+        // Get product, quantity, and size
         $product = Product::find($request->id);
         $quantity = $request->product_amount;
-
+        $size = $request->size;
+    
         // Check if product is available
         if (!$product || $product->stock < $quantity) {
             return redirect()->back()->with('error', 'Product not available in the requested quantity.');
         }
-
-        // Check if the product is already in the user's cart
-        $cartEntry = $user->products_in_cart()->where('product_id', $product->id)->first(); // Updated method name
-
+    
+        // Check if the product is already in the user's cart for the selected size
+        $cartEntry = $user->products_in_cart()->where('product_id', $product->id)->where('size', $size)->first();
+    
         if ($cartEntry) {
             // Update the existing entry in the cart
-            $user->products_in_cart()->updateExistingPivot($product->id, [ // Updated method name
+            $user->products_in_cart()->updateExistingPivot($product->id, [
                 'product_amount' => $cartEntry->pivot->product_amount + $quantity,
                 'total_price' => ($cartEntry->pivot->product_amount + $quantity) * $product->price,
+                'size' => $size,  // Ensure size is updated
             ]);
         } else {
             // Add new product to cart
-            $user->products_in_cart()->attach($product->id, [ // Updated method name
+            $user->products_in_cart()->attach($product->id, [
                 'product_amount' => $quantity,
                 'total_price' => $quantity * $product->price,
+                'size' => $size,  // Attach size information
             ]);
         }
-
+    
         // Log the executed queries
         Log::info(\DB::getQueryLog());
-
+    
         return redirect()->back()->with('success', 'Product added to cart!');
     }
+    
 
     
 }

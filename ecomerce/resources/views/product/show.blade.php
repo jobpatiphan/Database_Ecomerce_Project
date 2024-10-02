@@ -77,23 +77,30 @@
                 <form action="{{ route('cart.add') }}" method="POST" class="mt-4">
                     @csrf
                     <input type="hidden" name="id" value="{{ $product->id }}">
-                    
+
                     <div class="flex items-center space-x-4">
                         <!-- Quantity Label and Input -->
                         <div class="flex items-center space-x-2">
                             <label for="product_amount" class="text-gray-700">Quantity:</label>
                             <input type="number" id="product_amount" name="product_amount" value="1" min="1" max="{{ $product->stock }}" class="border border-gray-300 rounded-lg p-2 w-24">
                         </div>
-                        
+
+                        <!-- Size Dropdown -->
+                        <div class="flex items-center space-x-2">
+                            <label for="size" class="text-gray-700">Size:</label>
+                            <select id="size" name="size" class="border border-gray-300 rounded-lg p-2">
+                                @for ($i = 36; $i <= 47; $i++)
+                                    <option value="{{ $i }}">EU {{ $i }}</option>
+                                @endfor
+                            </select>
+                        </div>
+
                         <!-- Add to Cart Button -->
                         <div>
                             <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600">Add to Cart</button>
                         </div>
                     </div>
                 </form>
-
-
-
             </div>
         </div>
 
