@@ -24,11 +24,11 @@ class Product extends Model
         'updated_at' => 'datetime', 
     ]; 
 
-    public function users_cart()
+    public function user_carts()
     {
-        return $this->belongsToMany(User::class, 'cart_entry')
-            ->withPivot('total_price', 'product_amount')
-            ->withTimestamps();
+        return $this->belongsToMany(Product::class, 'cart_entry', 'user_id', 'product_id')
+                    ->withPivot('total_price', 'product_amount')
+                    ->withTimestamps();
     }
 
 
@@ -39,6 +39,7 @@ class Product extends Model
         ->withTimestamps();
     }
 
+
     public function users_wish_list()
     {
         return $this->belongsToMany(User::class, 'wish_list_entry')
@@ -48,6 +49,7 @@ class Product extends Model
     // Method to check if the product is in the user's wishlist
     public function isInWishlist(User $user)
     {
+
         return $this->users_wish_list()->where('user_id', $user->id)->exists();
     }
     //     public function productEntries(){ 

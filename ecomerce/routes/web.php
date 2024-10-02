@@ -43,5 +43,18 @@ Route::middleware('auth')->group(function () {
     Route::post('/profile/photo/update', [UserController::class, 'updateProfilePhoto'])->name('profile.photo.update');
 });
 
+Route::get('/cart', [CartController::class, 'index'])->name('profile.cart');
+
+//increase
+Route::post('/cart/increase', [CartController::class, 'increaseAmount'])->name('profile.increaseAmount');
+//decrease
+Route::post('/cart/decrease', [CartController::class, 'decreaseAmount'])->name('profile.decreaseAmount');
+//drop
+Route::delete('/cart/drop', [CartController::class, 'dropProduct'])->name('profile.drop');
+//checkout knack
+
+
+//wish list part
+Route::get('/wishlist', [WishListController::class, 'index'])->name('profile.wishList');
 // Load authentication routes
 require __DIR__.'/auth.php';
