@@ -17,7 +17,7 @@
                     <img src="https://s3-alpha-sig.figma.com/img/5134/8590/a8d3f72db06db56329330056bc97ed68?Expires=1728259200&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=DAeG6B-fX1ZavXbo4g53r9THwyL662fFJzdqZ5L0aQEklrwy9GDrEXXh~McNic8fHFOM-eEvLymdKxznnTgxDimI2f9fTYjCA2JJdrj7iz9sgtbaoIUXNX7Eb~I9LGRJNUopuWUMZ~ACr76mGQ6MsWthFDqMW9DqAjHUcbJP93Z1HRNHOyruvpD-22MMpWFxUnjMcT6xq28u7o~NHqIz-jtpUeeHjZ-nUFoX1xkQU1DUKgwptzTOaVk-O7PjJMIKnc6jArIjguOnsWOTyULnxtXjRAQ~LsDWKux6G~ir03p2KdQiPpCCb1f6w~lrFQKGRHDQ2gZBWr~EUx4g9pqTtA__" alt="Logo" class="w-10 h-10 rounded-lg mr-4">
                     <nav>
                         <ul class="flex space-x-4">
-                            <li><a href="#" class="text-black">Home</a></li>
+                            <li><a href="{{ route('dashboard') }}" class="text-black">Home</a></li>
                             <li><a href="#" class="text-black">Shop</a></li>
                             <li><a href="#" class="text-black">Contact Us</a></li>
                         </ul>
@@ -48,13 +48,6 @@
                             </form>
                         </div>
                     </div>
-
-
-                    
-            
-        
-                
-               
                 </div>
             </header>
 
@@ -67,20 +60,50 @@
                 <section class="p-8">
                     <div class="flex justify-between items-center mb-4">
                         <h2 class="text-2xl font-bold">Shop by Categories</h2>
-                        <div class="space-x-2">
-                            <button class="bg-gray-200 p-2 rounded">&larr;</button>
-                            <button class="bg-gray-200 p-2 rounded">&rarr;</button>
+                    </div>
+
+                    <div class="grid grid-cols-4 gap-4 rounded-lg">
+                        @foreach($products as $product)
+                            <div class="bg-gray-200 h-96 flex flex-col justify-between items-center p-4 rounded-lg">
+                                <!-- Display Product Image -->
+                                <img src="{{ asset($product->photo) }}" alt="{{ $product->name }}" class="w-64 h-64 object-contain rounded-lg">
+
+                                <!-- Product Name -->
+                                <h3 class="text-lg font-semibold">{{ $product->name }}</h3>
+
+                                <!-- Product Price -->
+                                <p class="text-gray-700">${{ number_format($product->price, 2) }}</p>
+
+                                <!-- Link to Product Page -->
+                                <a href="{{ route('product.show', $product->id) }}" class="bg-black text-white px-4 py-2 rounded">
+                                    View Product
+                                </a>
+                            </div>
+                        @endforeach
+                    </div>
+
+                     <!-- Pagination Controls -->
+                    <div class="flex justify-center mt-4">
+                        <div class="flex space-x-2">
+                            @if ($products->onFirstPage())
+                                <span class="disabled cursor-not-allowed text-gray-400 font-bold px-4 py-2 rounded bg-gray-200">&larr; Previous</span>
+                            @else
+                                <a href="{{ $products->previousPageUrl() }}" class="text-white bg-black hover:bg-gray-700 px-4 py-2 rounded transition duration-200">
+                                    &larr; Previous
+                                </a>
+                            @endif
+
+                            @if ($products->hasMorePages())
+                                <a href="{{ $products->nextPageUrl() }}" class="text-white bg-black hover:bg-gray-700 px-4 py-2 rounded transition duration-200">
+                                    Next &rarr;
+                                </a>
+                            @else
+                                <span class="disabled cursor-not-allowed text-gray-400 font-bold px-4 py-2 rounded bg-gray-200">Next &rarr;</span>
+                            @endif
                         </div>
                     </div>
-                    <div class="grid grid-cols-4 gap-4">
-                        <div class="bg-gray-200 h-64">
-                        <a href="/product"class="bg-black text-white px-4 py-2 rounded"></a>
-                        </div>
-                        <div class="bg-gray-200 h-64"></div>
-                        <div class="bg-gray-200 h-64"></div>
-                        <div class="bg-gray-200 h-64"></div>
-                    </div>
-                </section>
+
+            </section>
             </main>
 
             <footer class="bg-black text-white p-8">
