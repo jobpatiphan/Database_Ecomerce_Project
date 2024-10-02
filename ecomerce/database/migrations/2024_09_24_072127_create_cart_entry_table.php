@@ -18,6 +18,7 @@ return new class extends Migration
             $table->foreign('product_id')->references('id')->on('products')->onDelete('cascade');
             $table->double('total_price'); 
             $table->integer('product_amount');
+            $table->integer('size');
             $table->timestamps();
         });
     }
