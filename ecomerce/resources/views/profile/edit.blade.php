@@ -14,12 +14,12 @@
                 <nav class="mt-8">
                     <ul class="space-y-4">
                         <li>
-                            <a href="#" class="flex items-center p-2 bg-black text-white rounded-lg">
+                            <a href="{{route('profile.edit')}}" class="flex items-center p-2 bg-black text-white rounded-lg">
                                 <span class="ml-3">Personal Information</span>
                             </a>
                         </li>
                         <li>
-                            <a href="#" class="flex items-center p-2 text-gray-700 hover:bg-gray-100 rounded-lg">
+                            <a href="{{route('profile.order')}}" class="flex items-center p-2 text-gray-700 hover:bg-gray-100 rounded-lg">
                                 <span class="ml-3">My Orders</span>
                             </a>
                         </li>
