@@ -44,6 +44,7 @@ class WishlistController extends Controller
         $wishListEntries =Auth::user()->products_in_wish_list()->get(); //this get products
         
         return view('profile.wishlist', compact('wishListEntries', 'userId'));
+
     }
     public function dropProduct(Request $request)
     {
@@ -54,5 +55,6 @@ class WishlistController extends Controller
         $user->products_in_wish_list()->detach($id);
     
         return redirect()->route('profile.wishList')->with('status', 'Product removed from wish list successfully');
+
     }
 }

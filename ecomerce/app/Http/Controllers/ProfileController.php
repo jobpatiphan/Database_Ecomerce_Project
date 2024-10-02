@@ -6,6 +6,7 @@ use App\Http\Requests\ProfileUpdateRequest;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\View\View;
 
@@ -22,17 +23,37 @@ class ProfileController extends Controller
     }
 
     /**
-     * Update the user's profile information.
+     * Update the user's profile information and password if provided.
      */
     public function update(ProfileUpdateRequest $request): RedirectResponse
     {
-        $request->user()->fill($request->validated());
+        // Validate incoming data, including passwords if they exist
+        $validatedData = $request->validated();
+        
+        // Update profile information
+        $user = $request->user();
+        $user->fill($validatedData);
 
-        if ($request->user()->isDirty('email')) {
-            $request->user()->email_verified_at = null;
+        // If email is changed, mark email as unverified
+        if ($user->isDirty('email')) {
+            $user->email_verified_at = null;
         }
 
-        $request->user()->save();
+        // Check if password fields are present, validate and update password
+        if ($request->filled('old_password') && $request->filled('password')) {
+            // Verify the old password
+            if (!Hash::check($request->input('old_password'), $user->password)) {
+                return Redirect::route('profile.edit')->withErrors([
+                    'old_password' => 'The current password is incorrect.',
+                ]);
+            }
+
+            // Update with the new password
+            $user->password = Hash::make($request->input('password'));
+        }
+
+        // Save user profile changes
+        $user->save();
 
         return Redirect::route('profile.edit')->with('status', 'profile-updated');
     }
