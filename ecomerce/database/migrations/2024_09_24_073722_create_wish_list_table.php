@@ -24,6 +24,13 @@ return new class extends Migration
      */
     public function down(): void
     {
+        // Drop the foreign key constraints first
+        Schema::table('wish_list_entry', function (Blueprint $table) {
+            $table->dropForeign(['user_id']);
+            $table->dropForeign(['product_id']);
+        });
+
+        // Drop the wish_list_entry table
         Schema::dropIfExists('wish_list_entry');
     }
 };
