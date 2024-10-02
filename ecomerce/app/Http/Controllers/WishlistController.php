@@ -37,4 +37,13 @@ class WishlistController extends Controller
 
         return redirect()->back()->with('error', 'Product not found in your wishlist.');
     }
+
+    public function index()
+    {
+        $userId = Auth::id();
+        $wishListEntries =Auth::user()->products_in_wish_list()->get(); //this get products
+        
+        return view('profile.wishlist', compact('wishListEntries', 'userId'));
+
+    }
 }
