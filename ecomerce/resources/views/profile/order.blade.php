@@ -24,7 +24,7 @@
                             </a>
                         </li>
                         <li>
-                            <a href="#" class="flex items-center p-2 text-gray-700 hover:bg-gray-100 rounded-lg">
+                            <a href="{{ route('profile.wishList') }}" class="flex items-center p-2 text-gray-700 hover:bg-gray-100 rounded-lg">
                                 <span class="ml-3">My Wishlists</span>
                             </a>
                         </li>

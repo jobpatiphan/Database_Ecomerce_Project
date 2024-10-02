@@ -90,7 +90,7 @@
                             <label for="size" class="text-gray-700">Size:</label>
                             <select id="size" name="size" class="border border-gray-300 rounded-lg p-2">
                                 @for ($i = 36; $i <= 47; $i++)
-                                    <option value="{{ $i }}">EU {{ $i }}</option>
+                                    <option value="{{ $i }}">{{ $i }}</option>
                                 @endfor
                             </select>
                         </div>
