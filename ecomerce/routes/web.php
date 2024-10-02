@@ -55,6 +55,10 @@ Route::delete('/cart/drop', [CartController::class, 'dropProduct'])->name('profi
 
 
 //wish list part
-Route::get('/wishlist', [WishListController::class, 'index'])->name('profile.wishList');
+Route::get('/wishlist', [WishlistController::class, 'index'])->name('profile.wishList');
+
+//drop from wish list
+Route::delete('/wishlist/drop', [WishlistController::class, 'dropProduct'])->name('profile.dropWishlist');
+
 // Load authentication routes
 require __DIR__.'/auth.php';
