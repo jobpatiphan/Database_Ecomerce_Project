@@ -7,12 +7,13 @@ use Illuminate\Database\Eloquent\Model;
 
 class Product extends Model
 {
-    use HasFactory; 
+    use HasFactory;
     
     // Change this to 'id' if that is the primary key in your products table
     protected $table = 'products'; 
     protected $primaryKey = 'id'; // Update this line
     
+
     protected $fillable = [
         'name',
         'price',

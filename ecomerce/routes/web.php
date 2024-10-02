@@ -3,6 +3,7 @@
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\OrderController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\WelcomeController;
 use App\Http\Controllers\ProductController;
@@ -33,10 +34,14 @@ Route::get('/', function () {
 })->name('welcome');
 
 
+
+
+Route::post('/profile/photo/update', [UserController::class, 'updateProfilePhoto'])->name('profile.photo.update');
 // Dashboard route with middleware
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/commercefootshop', [DashboardController::class, 'index'])->name('dashboard');
 });
+
 
 // Profile routes
 Route::middleware('auth')->group(function () {
@@ -45,6 +50,13 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
     Route::post('/profile/photo/update', [UserController::class, 'updateProfilePhoto'])->name('profile.photo.update');
 });
+
+
+Route::middleware('auth')->group(function () {
+    Route::get('/order', [OrderController::class, 'index'])->name('profile.order');
+    
+});
+
 
 Route::get('/cart', [CartController::class, 'index'])->name('profile.cart');
 
@@ -58,6 +70,11 @@ Route::delete('/cart/drop', [CartController::class, 'dropProduct'])->name('profi
 
 
 //wish list part
-Route::get('/wishlist', [WishListController::class, 'index'])->name('profile.wishList');
+Route::get('/wishlist', [WishlistController::class, 'index'])->name('profile.wishList');
+
+//drop from wish list
+Route::delete('/wishlist/drop', [WishlistController::class, 'dropProduct'])->name('profile.dropWishlist');
+
 // Load authentication routes
+
 require __DIR__.'/auth.php';

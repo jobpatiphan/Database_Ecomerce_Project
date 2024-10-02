@@ -46,4 +46,15 @@ class WishlistController extends Controller
         return view('profile.wishlist', compact('wishListEntries', 'userId'));
 
     }
+    public function dropProduct(Request $request)
+    {
+        $id = $request->input('id'); // Get the product ID from the form input
+        $user = Auth::user(); // Get the authenticated user
+    
+        // Detach the product from the user's cart (pivot table), instead of deleting the product
+        $user->products_in_wish_list()->detach($id);
+    
+        return redirect()->route('profile.wishList')->with('status', 'Product removed from wish list successfully');
+
+    }
 }

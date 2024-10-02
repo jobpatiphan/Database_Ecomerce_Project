@@ -8,8 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class Order extends Model
 {
     use HasFactory;
-    protected $table = 'Order'; 
-    protected $primaryKey = 'order_id';
+    // protected $table = 'Order'; 
+    // protected $primaryKey = 'order_id';
     protected $fillable = [
         'user_id', 
         //'Product id',
@@ -19,8 +19,8 @@ class Order extends Model
     protected $cast = [
         'date' => 'datetime',
         'create_at' => 'datetime',
-        'updated_at' = > 'datetime'
-    ]
+        'updated_at' => 'datetime'
+    ];
     
 
     public function user()
@@ -30,8 +30,8 @@ class Order extends Model
     public function products_in_order()
     {
         return $this->belongsToMany(Product::class, 'corder_entry_products' , 'order_id' , 'product_id')
-        ->withPivot('product_amount');
-        ->withTimestamps();
+                    ->withPivot('product_amount')
+                    ->withTimestamps();
     }
     // // Relation to Product model (assuming many-to-one relationship)
     // public function product()
