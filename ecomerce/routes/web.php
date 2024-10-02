@@ -4,6 +4,7 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\CartController;
+use App\Http\Controllers\WishListController;
 
 Route::get('/', function () {
     if (auth()->check()) {
@@ -25,4 +26,15 @@ Route::middleware('auth')->group(function () {
 
 Route::get('/cart', [CartController::class, 'index'])->name('profile.cart');
 
+//increase
+Route::post('/cart/increase', [CartController::class, 'increaseAmount'])->name('profile.increaseAmount');
+//decrease
+Route::post('/cart/decrease', [CartController::class, 'decreaseAmount'])->name('profile.decreaseAmount');
+//drop
+Route::delete('/cart/drop', [CartController::class, 'dropProduct'])->name('profile.drop');
+//checkout knack
+
+
+//wish list part
+Route::get('/wishlist', [WishListController::class, 'index'])->name('profile.wishList');
 require __DIR__.'/auth.php';

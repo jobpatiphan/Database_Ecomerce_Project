@@ -54,18 +54,37 @@
                                         <td class="py-4">{{ $entry->price }}</td>
                                         <td class="py-4">
                                             <div class="flex items-center">
-                                                <button class="px-2 py-1 border border-gray-300">-</button>
+                                                 <!-- decrease -->
+                                                <form action="{{ route('profile.decreaseAmount') }}" method="POST">
+                                                    @csrf
+                                                    <input type="hidden" name="id" value="{{ $entry->id }}">
+                                                    <button type="submit" class="px-2 py-1 border border-gray-300">-</button>
+                                                </form>
+                                                
                                                 <input type="text" value="{{ $entry->pivot->product_amount }}" class="w-12 text-center border-t border-b border-gray-300 mx-2">
-                                                <button class="px-2 py-1 border border-gray-300">+</button>
+                                                
+                                                <!-- increase -->
+                                                <form action="{{ route('profile.increaseAmount') }}" method="POST">
+                                                    @csrf
+                                                    <input type="hidden" name="id" value="{{ $entry->id }}">
+                                                    <button type="submit" class="px-2 py-1 border border-gray-300">+</button>
+                                                </form>
                                             </div>
                                         </td>
                                         <td class="py-4">{{ number_format((float)$entry->price * (float)$entry->pivot->product_amount, 2) }}</td>
                                         <td class="py-4">
-                                            <button class="text-red-500">
-                                                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
-                                                </svg>
-                                            </button>
+                                            <!-- drop -->
+                                            <form action="{{ route('profile.drop') }}" method="POST">
+                                                @csrf
+                                                @method('DELETE') <!-- Spoof DELETE request -->
+                                                <input type="hidden" name="id" value="{{ $entry->id }}">
+                                                <button class="text-red-500">
+                                                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                                                    </svg>
+                                                </button>
+                                            </form>
+                                            
                                         </td>
                                     </tr>
                                 @endforeach
@@ -80,6 +99,8 @@
                                             <span>Grand Total</span>
                                             <span>{{ number_format($sum, 2) }}</span>
                                         </div>
+
+                                        <!-- checkout knack -->
                                         <button class="w-full bg-black text-white py-2 mt-4 rounded">Proceed to Checkout</button>
                                     </div>
                                     </td>

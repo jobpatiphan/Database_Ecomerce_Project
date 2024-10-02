@@ -6,41 +6,55 @@ use Illuminate\Http\Request;
 use Illuminate\View\View; // Import the View class
 use App\Models\User;
 use App\Models\Product;
-use App\Models\Cart;
 use Illuminate\Support\Facades\Auth;
 
 
 class CartController extends Controller
 {
-    public function show(Request $request): View
-    {
-        // Return the 'profile.cart' view
-        return view('profile.cart');
-    }
-        public function index()
+    public function index()
     {
         $userId = Auth::id();
-        $cartEntries =Auth::user()->products_in_cart()->get(); //this get user+products
+        $cartEntries =Auth::user()->products_in_cart()->get(); //this get products
+        
         return view('profile.cart', compact('cartEntries', 'userId'));
     }
-    // public function index()
-    // {
-    //     // Retrieve the products in the cart for the authenticated user
-    //     $cartEntries = Auth::user()->users_cart()->with('products')->get(); // Use get() to execute the query
 
-    //     // Check if the cart is empty
-    //     if ($cartEntries->isEmpty()) {
-    //         // Handle the case when the cart is empty (optional)
-    //         return view('profile.cart', ['cartEntries' => [], 'userId' => Auth::id()]);
-    //     }
+    public function increaseAmount(Request $request)
+    {
+        $id = $request->input('id'); // Get the id from the form input
+        $userId = Auth::id();
+        $cartEntries = Auth::user()->products_in_cart()->findOrFail($id); // Get the product in the cart
+    
+        $cartEntries->pivot->product_amount += 1; // Increase the amount
+        $cartEntries->pivot->save(); // Save the updated pivot
+    
+        return redirect()->route('profile.cart')->with('status', 'Product amount increased successfully');
+    }
 
-    //     // Passing the authenticated user's ID
-    //     $userId = Auth::id();
+    public function decreaseAmount(Request $request){
+        $id = $request->input('id'); // Get the id from the form input
+        $userId = Auth::id();
+        $cartEntries = Auth::user()->products_in_cart()->findOrFail($id); // Get the product in the cart
+    
+        $cartEntries->pivot->product_amount -= 1; // Increase the amount
+        $cartEntries->pivot->save(); // Save the updated pivot
+    
+        return redirect()->route('profile.cart')->with('status', 'Product amount decreased successfully');
+    }
 
-    //     // Return the view with cart entries and userId
-    //     return view('profile.cart', compact('cartEntries', 'userId'));
-    // }
-
+    public function dropProduct(Request $request)
+    {
+        $id = $request->input('id'); // Get the product ID from the form input
+        $user = Auth::user(); // Get the authenticated user
+    
+        // Detach the product from the user's cart (pivot table), instead of deleting the product
+        $user->products_in_cart()->detach($id);
+    
+        return redirect()->route('profile.cart')->with('status', 'Product removed from cart successfully');
+    }
+    public function checkout(){
+        //knack...
+    }
 
     
 }
