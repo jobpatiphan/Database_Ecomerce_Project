@@ -1,6 +1,6 @@
 <?php
 
-namespace Database\Seeder;
+namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use App\Models\Product;
@@ -17,7 +17,7 @@ class ProductSeeder extends Seeder
             'price' => 100.00,
             'stock' => 50,
             'description' => 'Description here.',
-            'photo' => 'img/shoe_1.png'
+            'photo' => 'img/shoes_1.jpg'
         ]);
 
         Product::create([
@@ -25,7 +25,7 @@ class ProductSeeder extends Seeder
             'price' => 100.00,
             'stock' => 50,
             'description' => 'Description here.',
-            'photo' => 'img/shoe_2.png'
+            'photo' => 'img/shoes_2.jpg'
         ]);
 
         Product::create([
@@ -33,7 +33,7 @@ class ProductSeeder extends Seeder
             'price' => 100.00,
             'stock' => 50,
             'description' => 'Description here.',
-            'photo' => 'img/shoe_3.png'
+            'photo' => 'img/shoes_3.png'
         ]);
 
         Product::create([
@@ -41,7 +41,7 @@ class ProductSeeder extends Seeder
             'price' => 100.00,
             'stock' => 50,
             'description' => 'Description here.',
-            'photo' => 'img/shoe_4.png'
+            'photo' => 'img/shoes_4.png'
         ]);
 
         Product::create([
@@ -49,7 +49,7 @@ class ProductSeeder extends Seeder
             'price' => 100.00,
             'stock' => 50,
             'description' => 'Description here.',
-            'photo' => 'img/shoe_5.webp'
+            'photo' => 'img/shoes_5.webp'
         ]);
 
         Product::create([
@@ -57,7 +57,7 @@ class ProductSeeder extends Seeder
             'price' => 100.00,
             'stock' => 50,
             'description' => 'Description here.',
-            'photo' => 'img/shoe_6.webp'
+            'photo' => 'img/shoes_6.webp'
         ]);
 
         Product::create([
@@ -65,7 +65,7 @@ class ProductSeeder extends Seeder
             'price' => 100.00,
             'stock' => 50,
             'description' => 'Description here.',
-            'photo' => 'img/shoe_7.png'
+            'photo' => 'img/shoes_7.png'
         ]);
 
         Product::create([
@@ -73,7 +73,7 @@ class ProductSeeder extends Seeder
             'price' => 100.00,
             'stock' => 50,
             'description' => 'Description here.',
-            'photo' => 'img/shoe_8.png'
+            'photo' => 'img/shoes_8.png'
         ]);
 
         Product::create([
@@ -81,7 +81,7 @@ class ProductSeeder extends Seeder
             'price' => 100.00,
             'stock' => 50,
             'description' => 'Description here.',
-            'photo' => 'img/shoe_9.png'
+            'photo' => 'img/shoes_9.png'
         ]);
 
         Product::create([
@@ -89,7 +89,7 @@ class ProductSeeder extends Seeder
             'price' => 100.00,
             'stock' => 50,
             'description' => 'Description here.',
-            'photo' => 'img/shoe_10.png'
+            'photo' => 'img/shoes_10.png'
         ]);
 
         Product::create([
@@ -97,7 +97,7 @@ class ProductSeeder extends Seeder
             'price' => 100.00,
             'stock' => 50,
             'description' => 'Description here.',
-            'photo' => 'img/shoe_11.png'
+            'photo' => 'img/shoes_11.jpg'
         ]);
 
         Product::create([
@@ -105,7 +105,7 @@ class ProductSeeder extends Seeder
             'price' => 100.00,
             'stock' => 50,
             'description' => 'Description here.',
-            'photo' => 'img/shoe_12.png'
+            'photo' => 'img/shoes_12.jpg'
         ]);
 
         Product::create([
@@ -113,7 +113,7 @@ class ProductSeeder extends Seeder
             'price' => 100.00,
             'stock' => 50,
             'description' => 'Description here.',
-            'photo' => 'img/shoe_13.png'
+            'photo' => 'img/shoes_13.jpg'
         ]);
 
         Product::create([
@@ -121,7 +121,7 @@ class ProductSeeder extends Seeder
             'price' => 100.00,
             'stock' => 50,
             'description' => 'Description here.',
-            'photo' => 'img/shoe_14.png'
+            'photo' => 'img/shoes_14.png'
         ]);
 
         Product::create([
@@ -129,7 +129,7 @@ class ProductSeeder extends Seeder
             'price' => 100.00,
             'stock' => 50,
             'description' => 'Description here.',
-            'photo' => 'img/shoe_15.png'
+            'photo' => 'img/shoes_15.png'
         ]);
 
         Product::create([
@@ -137,7 +137,7 @@ class ProductSeeder extends Seeder
             'price' => 100.00,
             'stock' => 50,
             'description' => 'Description here.',
-            'photo' => 'img/shoe_16.png'
+            'photo' => 'img/shoes_16.png'
         ]);
 
         Product::create([
@@ -145,7 +145,7 @@ class ProductSeeder extends Seeder
             'price' => 100.00,
             'stock' => 50,
             'description' => 'Description here.',
-            'photo' => 'img/shoe_17.png'
+            'photo' => 'img/shoes_17.png'
         ]);
 
         Product::create([
@@ -153,7 +153,7 @@ class ProductSeeder extends Seeder
             'price' => 100.00,
             'stock' => 50,
             'description' => 'Description here.',
-            'photo' => 'img/shoe_18.png'
+            'photo' => 'img/shoes_18.jpg'
         ]);
 
         Product::create([
@@ -161,7 +161,7 @@ class ProductSeeder extends Seeder
             'price' => 100.00,
             'stock' => 50,
             'description' => 'Description here.',
-            'photo' => 'img/shoe_19.png'
+            'photo' => 'img/shoes_19.png'
         ]);
     }
 }
