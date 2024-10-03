@@ -101,11 +101,13 @@
                                         <div class="flex justify-between py-2 border-t">
                                             <span>Grand Total</span>
                                             <span>{{ number_format($sum, 2) }}</span>
-                                        </div>
+                                            <form action="{{ route('checkout') }}" method="POST">
+                                                @csrf
+                                                <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600">
+                                                    Proceed to Checkout
+                                                </button>
+                                            </form>
 
-                                        <!-- checkout knack -->
-                                        <button class="w-full bg-black text-white py-2 mt-4 rounded">Proceed to Checkout</button>
-                                    </div>
                                     </td>
                                     
                                 @endif

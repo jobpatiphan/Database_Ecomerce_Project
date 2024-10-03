@@ -3,12 +3,20 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
+use Illuminate\View\View; // Import the View class
+use App\Models\User;
 use App\Models\Product;
+use Illuminate\Support\Facades\Auth;
 
-class WishlistController extends Controller
+class WishListController extends Controller
 {
-    // Add product to wishlist
+    public function index()
+    {
+        $userId = Auth::id();
+        $wishListEntries =Auth::user()->products_in_wish_list()->get(); //this get products
+        
+        return view('profile.wishlist', compact('wishListEntries', 'userId'));
+    }
     public function addToWishlist(Request $request)
     {
         $user = Auth::user();
@@ -37,15 +45,6 @@ class WishlistController extends Controller
 
         return redirect()->back()->with('error', 'Product not found in your wishlist.');
     }
-
-    public function index()
-    {
-        $userId = Auth::id();
-        $wishListEntries =Auth::user()->products_in_wish_list()->get(); //this get products
-        
-        return view('profile.wishlist', compact('wishListEntries', 'userId'));
-
-    }
     public function dropProduct(Request $request)
     {
         $id = $request->input('id'); // Get the product ID from the form input
@@ -54,7 +53,6 @@ class WishlistController extends Controller
         // Detach the product from the user's cart (pivot table), instead of deleting the product
         $user->products_in_wish_list()->detach($id);
     
-        return redirect()->route('profile.wishList')->with('status', 'Product removed from wish list successfully');
-
+        return redirect()->route('profile.wishList')->with('status', 'Product removed from cart successfully');
     }
 }
