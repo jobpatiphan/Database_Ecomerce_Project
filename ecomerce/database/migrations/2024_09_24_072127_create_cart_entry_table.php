@@ -20,7 +20,6 @@ return new class extends Migration
             $table->integer('product_amount');
             $table->integer('size');
             $table->timestamps();
-            $table->string('in_order')->nullable();
         });
     }
 

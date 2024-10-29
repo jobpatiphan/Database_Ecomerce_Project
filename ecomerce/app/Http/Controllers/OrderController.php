@@ -55,55 +55,57 @@ class OrderController extends Controller
     }
 
     public function checkout(Request $request)
-{
-    $user = auth()->user(); // Ensure the user is authenticated
-    $cartItems = $user->products_in_cart()->wherePivot('in_order', 'yes')->get(); // Fetch only items with in_order set to "yes"
+    {
+        $user = auth()->user();
+        $selectedItemIds = json_decode($request->input('selected_items'), true);
 
-    // Check if there are items to checkout
-    if ($cartItems->isEmpty()) {
-        return redirect()->route('cart.index')->withErrors('No items selected for checkout!');
-    }
-
-    // Calculate the total price from the selected cart items
-    $totalPrice = $cartItems->sum(function ($item) {
-        return $item->pivot->product_amount * $item->price;
-    });
-
-    // Start a database transaction
-    DB::beginTransaction();
-
-    try {
-        // Create a new order
-        $order = Order::create([
-            'user_id' => $user->id,
-            'total_price' => $totalPrice,
-        ]);
-
-        // Add each selected cart item to the order_entry_products table
-        foreach ($cartItems as $item) {
-            DB::table('order_entry_products')->insert([
-                'order_id' => $order->id,
-                'product_id' => $item->id,
-                'product_amount' => $item->pivot->product_amount,
-                'created_at' => now(),
-                'updated_at' => now(),
-            ]);
+        // Validate that items were selected
+        if (empty($selectedItemIds)) {
+            return redirect()->route('profile.cart')->withErrors('Please select items to checkout!');
         }
 
-        // Detach only items that were checked out (those with in_order set to "yes")
-        $user->products_in_cart()->wherePivot('in_order', 'yes')->detach();
+        // Get only the selected items from cart
+        $cartItems = $user->products_in_cart()
+            ->whereIn('products.id', $selectedItemIds)
+            ->get();
 
-        // Commit the transaction
-        DB::commit();
+        // Calculate total price from selected items only
+        $totalPrice = $cartItems->sum(function ($item) {
+            return $item->pivot->product_amount * $item->price;
+        });
 
-        return redirect()->route('profile.order')->with('status', 'Checkout successful!');
+        DB::beginTransaction();
 
-    } catch (\Exception $e) {
-        // Rollback the transaction if something goes wrong
-        DB::rollBack();
-        return redirect()->back()->withErrors('There was an issue processing your order. Please try again.');
+        try {
+            // Create a new order
+            $order = Order::create([
+                'user_id' => $user->id,
+                'total_price' => $totalPrice,
+            ]);
+
+            // Add selected cart items to order_entry_products
+            foreach ($cartItems as $item) {
+                DB::table('order_entry_products')->insert([
+                    'order_id' => $order->id,
+                    'product_id' => $item->id,
+                    'product_amount' => $item->pivot->product_amount,
+                    'created_at' => now(),
+                    'updated_at' => now(),
+                ]);
+            }
+
+            // Remove only the selected items from cart
+            $user->products_in_cart()->detach($selectedItemIds);
+
+            DB::commit();
+
+            return redirect()->route('profile.order');
+
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return redirect()->back()->withErrors('There was an issue processing your order. Please try again.');
+        }
     }
-}
 
     /**
      * Display the order success page.
