@@ -55,55 +55,55 @@ class OrderController extends Controller
     }
 
     public function checkout(Request $request)
-    {
-        $user = auth()->user();  // Assuming the user is authenticated
-        $cartItems = $user->products_in_cart;  // Fetch user's cart items using relationship
+{
+    $user = auth()->user(); // Ensure the user is authenticated
+    $cartItems = $user->products_in_cart()->wherePivot('in_order', 'yes')->get(); // Fetch only items with in_order set to "yes"
 
-        // Check if cart is empty
-        if ($cartItems->isEmpty()) {
-            return redirect()->route('cart.index')->withErrors('Your cart is empty!');
-        }
-
-        // Calculate total price from the cart items
-        $totalPrice = $cartItems->sum(function ($item) {
-            return $item->pivot->product_amount * $item->price;
-        });
-
-        // Start a database transaction
-        DB::beginTransaction();
-
-        try {
-            // Create a new order
-            $order = Order::create([
-                'user_id' => $user->id,
-                'total_price' => $totalPrice,
-            ]);
-
-            // Add each cart item to the order_entry_products table
-            foreach ($cartItems as $item) {
-                DB::table('order_entry_products')->insert([
-                    'order_id' => $order->id,
-                    'product_id' => $item->id,
-                    'product_amount' => $item->pivot->product_amount,
-                    'created_at' => now(),
-                    'updated_at' => now(),
-                ]);
-            }
-
-            // Clear the user's cart (optional)
-            $user->products_in_cart()->detach(); // Remove all items from cart
-
-            // Commit the transaction
-            DB::commit();
-
-            return redirect()->route('profile.order');
-
-        } catch (\Exception $e) {
-            // Rollback the transaction if something goes wrong
-            DB::rollBack();
-            return redirect()->back()->withErrors('There was an issue processing your order. Please try again.');
-        }
+    // Check if there are items to checkout
+    if ($cartItems->isEmpty()) {
+        return redirect()->route('cart.index')->withErrors('No items selected for checkout!');
     }
+
+    // Calculate the total price from the selected cart items
+    $totalPrice = $cartItems->sum(function ($item) {
+        return $item->pivot->product_amount * $item->price;
+    });
+
+    // Start a database transaction
+    DB::beginTransaction();
+
+    try {
+        // Create a new order
+        $order = Order::create([
+            'user_id' => $user->id,
+            'total_price' => $totalPrice,
+        ]);
+
+        // Add each selected cart item to the order_entry_products table
+        foreach ($cartItems as $item) {
+            DB::table('order_entry_products')->insert([
+                'order_id' => $order->id,
+                'product_id' => $item->id,
+                'product_amount' => $item->pivot->product_amount,
+                'created_at' => now(),
+                'updated_at' => now(),
+            ]);
+        }
+
+        // Detach only items that were checked out (those with in_order set to "yes")
+        $user->products_in_cart()->wherePivot('in_order', 'yes')->detach();
+
+        // Commit the transaction
+        DB::commit();
+
+        return redirect()->route('profile.order')->with('status', 'Checkout successful!');
+
+    } catch (\Exception $e) {
+        // Rollback the transaction if something goes wrong
+        DB::rollBack();
+        return redirect()->back()->withErrors('There was an issue processing your order. Please try again.');
+    }
+}
 
     /**
      * Display the order success page.
