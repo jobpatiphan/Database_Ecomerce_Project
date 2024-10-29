@@ -10,6 +10,8 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\WishlistController;
 use App\Http\Controllers\AddressController;
+use App\Http\Controllers\ContactUs;
+use App\Http\Controllers\ContactUsController;
 
 Route::put('/profile/address', [ProfileController::class, 'updateAddress'])->name('profile.updateAddress');
 
@@ -20,6 +22,12 @@ Route::post('/wishlist/add', [WishlistController::class, 'addToWishlist'])->name
 Route::post('/wishlist/remove', [WishlistController::class, 'removeFromWishlist'])->name('wishlist.remove');
 
 
+//Page shop 
+Route::get('/products', [ProductController::class, 'index'])->name('product.index');
+
+//Page contact 
+Route::get('/contactUs', [ContactUsController::class, 'Goto'])->name('contactUs.index');
+Route::get('/sendUs', [ContactUsController::class, 'send'])->name('senD');
 
 
 Route::get('/cart', [CartController::class, 'view'])->name('cart.view');
@@ -57,7 +65,6 @@ Route::middleware('auth')->group(function () {
 
 Route::middleware('auth')->group(function () {
     Route::get('/order', [OrderController::class, 'index'])->name('profile.order');
-    
 });
 
 
