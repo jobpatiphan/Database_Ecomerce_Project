@@ -42,7 +42,7 @@
             <div class="product-page flex">
                 <!-- Product Image -->
                 <div class="w-1/4">
-                    <img src="{{ asset($product->photo) }}" alt="{{ $product->name }}" class="w-full h-auto rounded-lg">
+                    <img src="{{ asset('storage/' . $product->photo) }}" alt="{{ $product->name }}" class="w-full h-96 object-contain rounded-lg">
                 </div>
 
                 <!-- Product Details -->
