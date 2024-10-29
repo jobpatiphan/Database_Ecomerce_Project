@@ -42,7 +42,7 @@
             <div class="product-page flex">
                 <!-- Product Image -->
                 <div class="w-1/4">
-                    <img src="{{ asset('storage/' . $product->photo) }}" alt="{{ $product->name }}" class="w-full h-auto rounded-lg">
+                    <img src="{{ asset($product->photo) }}" alt="{{ $product->name }}" class="w-full h-auto rounded-lg">
                 </div>
 
                 <!-- Product Details -->
@@ -50,6 +50,7 @@
                     <h1 class="text-3xl font-bold">{{ $product->name }}</h1>
                     <p class="text-xl text-gray-700 mt-4">Price: ${{ number_format($product->price, 2) }}</p>
                     <p class="text-xl text-gray-700">Stock: {{ $product->stock }}</p>
+
                     <!-- Heart Icon for Wishlist -->
                     <form action="{{ $product->isInWishlist(Auth::user()) ? route('wishlist.remove') : route('wishlist.add') }}" method="POST" class="mt-4 flex items-center">
                         @csrf
@@ -63,18 +64,17 @@
                             </button>
                         </div>
                     </form>
+
+                    <!-- Add to Cart Form -->
                     <form action="{{ route('cart.add') }}" method="POST" class="mt-4">
                         @csrf
                         <input type="hidden" name="id" value="{{ $product->id }}">
-
                         <div class="flex items-center space-x-4">
-                            <!-- Quantity Label and Input -->
                             <div class="flex items-center space-x-2">
                                 <label for="product_amount" class="text-gray-700">Quantity:</label>
                                 <input type="number" id="product_amount" name="product_amount" value="1" min="1" max="{{ $product->stock }}" class="border border-gray-300 rounded-lg p-2 w-20">
                             </div>
 
-                            <!-- Size Dropdown -->
                             <div class="flex items-center space-x-2">
                                 <label for="size" class="text-gray-700 text-lg">Size:</label>
                                 <select id="size" name="size" class="border border-gray-300 rounded-lg p-3 text-lg w-20">
@@ -84,7 +84,6 @@
                                 </select>
                             </div>
 
-                            <!-- Add to Cart Button -->
                             <div>
                                 <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600">Add to Cart</button>
                             </div>
@@ -93,10 +92,22 @@
                 </div>
             </div>
 
+            <!-- Tab Navigation -->
             <div x-data="{ activeTab: 'description' }" class="mt-8">
                 <div class="flex space-x-4">
-                    <button @click="activeTab = 'description'" :class="activeTab === 'description' ? 'border-b-4 border-black' : ''" class="pb-2 text-lg font-bold focus:outline-none">Description</button>
-                    <button @click="activeTab = 'otherProduct'" :class="activeTab === 'otherProduct' ? 'border-b-4 border-black' : ''" class="pb-2 text-lg font-bold focus:outline-none">Other Products</button>
+                    <button 
+                        @click="activeTab = 'description'" 
+                        :class="activeTab === 'description' ? 'border-b-4 border-black' : 'border-b-4 border-white'" 
+                        class="pb-2 text-lg font-bold focus:outline-none">
+                        Description
+                    </button>
+                    
+                    <button 
+                        @click="activeTab = 'otherProduct'" 
+                        :class="activeTab === 'otherProduct' ? 'border-b-4 border-black' : 'border-b-4 border-white'" 
+                        class="pb-2 text-lg font-bold focus:outline-none">
+                        Other Products
+                    </button>
                 </div>
 
                 <!-- Tab Contents -->
@@ -110,43 +121,40 @@
                     <!-- Other Products Tab Content -->
                     <div x-show="activeTab === 'otherProduct'">
                         <h2 class="text-2xl font-bold">Other Products</h2>
-                        <section class="p-8">
-                            <div class="grid grid-cols-6 gap-3 rounded-lg">
-                                @foreach($products as $item)
-                                    @if ($item->id == $product->id)
-                                        @continue
-                                    @endif
-                                    <div class="bg-gray-200 h-96 flex flex-col justify-between items-center p-4 rounded-lg">
-                                        <!-- Display Product Image -->
-                                        <img src="{{ asset('storage/' . $item->photo) }}" alt="{{ $item->name }}" class="w-64 h-64 object-contain rounded-lg">
-                                        <h3 class="text-lg font-semibold">{{ $item->name }}</h3>
-                                        <p class="text-gray-700">${{ number_format($item->price, 2) }}</p>
-                                        <a href="{{ route('product.show', $item->id) }}" class="bg-black text-white px-4 py-2 rounded">
-                                            View Product
-                                        </a>
-                                    </div>
-                                @endforeach
-                            </div>
+                        <section section class="p-8" x-data="{ currentIndex: 0, productsPerPage: 2 }">
+                            <div class="overflow-hidden">
+                                <div class="flex transition-transform" :style="'transform: translateX(-' + (currentIndex * (100 / productsPerPage)) + '%);'">
+                                    @foreach($products as $product)
+                                        <div class="w-1/4 flex-none p-2">
+                                            <div class="bg-gray-200 h-96 flex flex-col justify-between items-center p-4 rounded-lg">
+                                                <!-- Display Product Image -->
+                                                <img src="{{ asset('storage/' . $product->photo) }}" alt="{{ $product->name }}" class="w-full h-64 object-contain rounded-lg">
 
-                            <!-- Pagination Controls -->
-                            <div class="flex justify-center mt-4">
-                                <div class="flex space-x-2">
-                                    @if ($products->onFirstPage())
-                                        <span class="disabled cursor-not-allowed text-gray-400 font-bold px-4 py-2 rounded bg-gray-200">&larr; Previous</span>
-                                    @else
-                                        <a href="{{ $products->previousPageUrl() }}" class="text-white bg-black hover:bg-gray-700 px-4 py-2 rounded transition duration-200">
-                                            &larr; Previous
-                                        </a>
-                                    @endif
+                                                <!-- Product Name -->
+                                                <h3 class="text-lg font-semibold">{{ Str::limit($product->name, 30, ' ...') }}</h3>
 
-                                    @if ($products->hasMorePages())
-                                        <a href="{{ $products->nextPageUrl() }}" class="text-white bg-black hover:bg-gray-700 px-4 py-2 rounded transition duration-200">
-                                            Next &rarr;
-                                        </a>
-                                    @else
-                                        <span class="disabled cursor-not-allowed text-gray-400 font-bold px-4 py-2 rounded bg-gray-200">Next &rarr;</span>
-                                    @endif
+                                                <!-- Product Price -->
+                                                <p class="text-gray-700">${{ number_format($product->price, 2) }}</p>
+
+                                                <!-- Link to Product Page -->
+                                                <a href="{{ route('product.show', $product->id) }}" class="bg-black text-white px-4 py-2 rounded">
+                                                    View Product
+                                                </a>
+                                            </div>
+                                        </div>
+                                    @endforeach
                                 </div>
+                            </div>
+                            <div class="flex justify-between mt-4">
+                                <button @click="currentIndex = Math.max(currentIndex - productsPerPage, 0)"
+                                        class="bg-black text-white px-4 py-2 rounded-l-lg">
+                                    &larr; Previous
+                                </button>
+
+                                <button @click="currentIndex = Math.min(currentIndex + productsPerPage, Math.ceil({{ count($products) }} / productsPerPage) - 1)"
+                                        class="bg-black text-white px-4 py-2 rounded-r-lg">
+                                    Next &rarr;
+                                </button>
                             </div>
                         </section>
                     </div>
