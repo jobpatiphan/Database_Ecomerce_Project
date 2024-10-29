@@ -29,7 +29,7 @@ class ProductSeeder extends Seeder
         ]);
 
         Product::create([
-            'name' => 'Converse Chuck Taylor All Star Classic Ox "Soccer Dot"',
+            'name' => 'Converse All Star Classic Ox Dot',
             'price' => 55.00,
             'stock' => 707,
             'description' => 'The classic Converse Chuck Taylor All Star Classic Ox gets a playful makeover with the "Soccer Dot" design. This low-top sneaker features a white canvas upper covered in colorful soccer ball and dot patterns, a vulcanized rubber sole, and the classic Chuck Taylor All Star branding on the ankle patch.',
@@ -37,7 +37,7 @@ class ProductSeeder extends Seeder
         ]);
 
         Product::create([
-            'name' => 'Converse Chuck Taylor All Star Classic Ox',
+            'name' => 'Converse All Star Classic Ox',
             'price' => 55.00,
             'stock' => 286,
             'description' => 'The iconic Converse Chuck Taylor All Star Classic Ox in a vibrant red color. This low-top sneaker features a durable canvas upper, a vulcanized rubber sole, and the classic Chuck Taylor All Star branding on the ankle patch.',
