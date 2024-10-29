@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
@@ -22,4 +23,13 @@ class ProductController extends Controller
 
         return view('product.show', compact('product', 'products'));
     }
+
+    // Show method for displaying all products
+    public function index()
+    {   // Fetch all products with pagination
+        $products = Product::simplePaginate(6); // Set the number of products per page
+
+        return view('shop.shopProduct', compact('products'));
+    }
+
 }

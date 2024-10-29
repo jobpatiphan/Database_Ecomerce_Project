@@ -1,10 +1,10 @@
 <section>
 <div class="flex flex-col md:flex-row">
 <section class="md:w-3/4 mt-8 md:mt-0 md:ml-6">
-        <h2 class="text-2xl font-bold mb-6">My Orders</h2>
+        <h2 class="text-2xl font-bold mb-6">My History</h2>
         <div class="space-y-6">
             @foreach($orders as $order)
-            @if($order->session != 'success')
+            @if($order->session == 'success')
             <div class="flex justify-between items-center bg-white shadow-md rounded-lg p-4">
                 <div class="flex items-center">
                     

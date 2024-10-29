@@ -5,7 +5,7 @@
         <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>Foot Collection</title>
+        <title>Shoes Collection</title>
         <link rel="preconnect" href="https://fonts.bunny.net">
         <link href="https://fonts.bunny.net/css?family=figtree:400,600&display=swap" rel="stylesheet" />
         @vite('resources/css/app.css')
@@ -52,7 +52,7 @@
     <div class="container mx-auto p-4">
         <div class="product-page flex">
             <!-- Product Image -->
-            <div class="w-1/2">
+            <div class="w-1/4">
                 <img src="{{ asset($product->photo) }}" alt="{{ $product->name }}" class="w-full h-auto rounded-lg">
             </div>
 
@@ -66,7 +66,7 @@
                     @csrf
                     <input type="hidden" name="product_id" value="{{ $product->id }}">
                     <div x-data="{ favorite: {{ $product->isInWishlist(Auth::user()) ? 'true' : 'false' }} }">
-                    <label for="product_amount" class="text-gray-700">FAVARITE:</label>
+                    <label for="product_amount" class="text-gray-700">FAVOURITE:</label>
                         <button type="submit">
                             <svg :class="favorite ? 'text-red-500' : 'text-gray-400'" class="w-6 h-6 cursor-pointer" fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
                                 <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
@@ -82,18 +82,19 @@
                         <!-- Quantity Label and Input -->
                         <div class="flex items-center space-x-2">
                             <label for="product_amount" class="text-gray-700">Quantity:</label>
-                            <input type="number" id="product_amount" name="product_amount" value="1" min="1" max="{{ $product->stock }}" class="border border-gray-300 rounded-lg p-2 w-24">
+                            <input type="number" id="product_amount" name="product_amount" value="1" min="1" max="{{ $product->stock }}" class="border border-gray-300 rounded-lg p-2 w-20">
                         </div>
 
                         <!-- Size Dropdown -->
                         <div class="flex items-center space-x-2">
-                            <label for="size" class="text-gray-700">Size:</label>
-                            <select id="size" name="size" class="border border-gray-300 rounded-lg p-2">
+                            <label for="size" class="text-gray-700 text-lg">Size:</label>
+                            <select id="size" name="size" class="border border-gray-300 rounded-lg p-3 text-lg w-20">
                                 @for ($i = 36; $i <= 47; $i++)
                                     <option value="{{ $i }}">{{ $i }}</option>
                                 @endfor
                             </select>
                         </div>
+
 
                         <!-- Add to Cart Button -->
                         <div>

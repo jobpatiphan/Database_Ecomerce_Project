@@ -12,12 +12,13 @@ use Illuminate\Support\Facades\Log;
 
 class CartController extends Controller
 {
-    public function index()
+    public function index(): \Illuminate\View\View
     {
+        $user = Auth::user();
         $userId = Auth::id();
-        $cartEntries =Auth::user()->products_in_cart()->get(); //this get products
-        
-        return view('profile.cart', compact('cartEntries', 'userId'));
+        $cartEntries = $user->products_in_cart()->get(); 
+
+        return view('profile.cart', compact('cartEntries', 'userId', 'user'));
     }
 
     public function increaseAmount(Request $request)
@@ -32,16 +33,21 @@ class CartController extends Controller
         return redirect()->route('profile.cart')->with('status', 'Product amount increased successfully');
     }
 
-    public function decreaseAmount(Request $request){
+    public function decreaseAmount(Request $request)
+    {
         $id = $request->input('id'); // Get the id from the form input
         $userId = Auth::id();
-        $cartEntries = Auth::user()->products_in_cart()->findOrFail($id); // Get the product in the cart
-    
-        $cartEntries->pivot->product_amount -= 1; // Increase the amount
-        $cartEntries->pivot->save(); // Save the updated pivot
-    
+        $cartEntry = Auth::user()->products_in_cart()->findOrFail($id); // Get the product in the cart
+
+        // Check if product_amount is greater than 0
+        if ($cartEntry->pivot->product_amount > 1) {
+            $cartEntry->pivot->product_amount -= 1; // Decrease the amount
+            $cartEntry->pivot->save(); // Save the updated pivot
+        }
+        
         return redirect()->route('profile.cart')->with('status', 'Product amount decreased successfully');
     }
+
 
     public function dropProduct(Request $request)
     {
@@ -52,9 +58,6 @@ class CartController extends Controller
         $user->products_in_cart()->detach($id);
     
         return redirect()->route('profile.cart')->with('status', 'Product removed from cart successfully');
-    }
-    public function checkout(){
-        //knack...
     }
   
     public function add(Request $request)

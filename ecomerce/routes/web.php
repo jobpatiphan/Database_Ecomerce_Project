@@ -14,6 +14,8 @@ use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\AdminProductController;
 use App\Http\Controllers\AdminOrderController;
 use App\Models\User;
+use App\Http\Controllers\ContactUs;
+use App\Http\Controllers\ContactUsController;
 
 Route::get('/', function () {
     if (Auth::check()) {
@@ -105,8 +107,6 @@ Route::middleware(['auth'])->group(function () {
 });
 
 
-
-
 Route::put('/profile/address', [ProfileController::class, 'updateAddress'])->name('profile.updateAddress');
 
 
@@ -116,6 +116,12 @@ Route::post('/wishlist/add', [WishlistController::class, 'addToWishlist'])->name
 Route::post('/wishlist/remove', [WishlistController::class, 'removeFromWishlist'])->name('wishlist.remove');
 
 
+//Page shop 
+Route::get('/products', [ProductController::class, 'index'])->name('product.index');
+
+//Page contact 
+Route::get('/contactUs', [ContactUsController::class, 'Goto'])->name('contactUs.index');
+Route::get('/sendUs', [ContactUsController::class, 'send'])->name('senD');
 
 
 Route::get('/cart', [CartController::class, 'view'])->name('cart.view');
@@ -145,16 +151,10 @@ Route::middleware('auth')->group(function () {
 
 Route::middleware('auth')->group(function () {
     Route::get('/order', [OrderController::class, 'index'])->name('profile.order');
-    
 });
 
 
-Route::get('/orders/{order}', [OrderController::class, 'getOrderEntries'])->name('order.show');
 
-Route::middleware('auth')->group(function () {
-    Route::post('/checkout', [OrderController::class, 'checkout'])->name('checkout');
-    Route::get('/order/success', [OrderController::class, 'orderSuccess'])->name('order.success');
-});
 
 Route::get('/cart', [CartController::class, 'index'])->name('profile.cart');
 
@@ -164,7 +164,7 @@ Route::post('/cart/increase', [CartController::class, 'increaseAmount'])->name('
 Route::post('/cart/decrease', [CartController::class, 'decreaseAmount'])->name('profile.decreaseAmount');
 //drop
 Route::delete('/cart/drop', [CartController::class, 'dropProduct'])->name('profile.drop');
-//checkout knack
+
 
 
 //wish list part
@@ -174,5 +174,20 @@ Route::get('/wishlist', [WishlistController::class, 'index'])->name('profile.wis
 Route::delete('/wishlist/drop', [WishlistController::class, 'dropProduct'])->name('profile.dropWishlist');
 
 // Load authentication routes
+
+Route::post('/order/paid/{id}', [OrderController::class, 'pay'])->name('profile.orderPayment');
+
+// Define your route to accept POST requests
+Route::delete('/order/cancel', [OrderController::class, 'cancel'])->name('profile.orderCancel');
+
+
+Route::get('/orders/{order}', [OrderController::class, 'getOrderEntries'])->name('order.show');
+
+Route::middleware('auth')->group(function () {
+    Route::post('/checkout', [OrderController::class, 'checkout'])->name('checkout');
+    Route::get('/order/success', [OrderController::class, 'orderSuccess'])->name('order.success');
+});
+
+Route::get('/history', [OrderController::class, 'indexHistory'])->name('history.show');
 
 require __DIR__.'/auth.php';
