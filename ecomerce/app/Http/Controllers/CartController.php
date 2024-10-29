@@ -14,11 +14,17 @@ class CartController extends Controller
 {
     public function index()
     {
-        $userId = Auth::id();
-        $cartEntries =Auth::user()->products_in_cart()->get(); //this get products
+        $user = Auth::user();
         
-        return view('profile.cart', compact('cartEntries', 'userId'));
+        // Set all in_order values to "no" for every item in the cart
+        $user->products_in_cart()->update(['in_order' => 'no']);
+
+        // Retrieve updated cart entries
+        $cartEntries = $user->products_in_cart()->get();
+
+        return view('profile.cart', compact('cartEntries'));
     }
+
 
     public function increaseAmount(Request $request)
     {
@@ -53,9 +59,34 @@ class CartController extends Controller
     
         return redirect()->route('profile.cart')->with('status', 'Product removed from cart successfully');
     }
-    public function checkout(){
-        //knack...
+    
+    public function checkout(Request $request)
+    {
+        $user = Auth::user();
+        $selectedItems = json_decode($request->input('selected_items'), true);
+
+        // Remove only selected items from the cart
+        $user->products_in_cart()->wherePivotIn('id', $selectedItems)
+            ->wherePivot('in_order', 'yes')
+            ->detach();
+
+        return redirect()->route('order.success')->with('status', 'Checkout successful');
     }
+
+
+    public function updateInOrder(Request $request)
+    {
+        $id = $request->input('id');
+        $inOrder = $request->input('in_order');
+
+        $user = Auth::user();
+        $cartEntry = $user->products_in_cart()->findOrFail($id);
+        $cartEntry->pivot->in_order = $inOrder;
+        $cartEntry->pivot->save();
+
+        return response()->json(['message' => 'Item updated successfully']);
+    }
+
   
     public function add(Request $request)
     {

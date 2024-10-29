@@ -25,6 +25,11 @@
                                 <span class="ml-3">My Wishlists</span>
                             </a>
                         </li>
+                        <li>
+                            <a href="{{ route('history.show') }}" class="flex items-center p-2 text-gray-700 hover:bg-gray-100 rounded-lg">
+                                <span class="ml-3">My History</span>
+                            </a>
+                        </li>
                     </ul>
                 </nav>
             </div>

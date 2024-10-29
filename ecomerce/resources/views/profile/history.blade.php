@@ -19,7 +19,7 @@
                             </a>
                         </li>
                         <li>
-                            <a href="{{route('profile.order')}}" class="flex items-center p-2 bg-black text-white rounded-lg">
+                            <a href="{{route('profile.order')}}" class="flex items-center p-2 text-gray-700 hover:bg-gray-100 rounded-lg">
                                 <span class="ml-3">My Orders</span>
                             </a>
                         </li>
@@ -29,7 +29,7 @@
                             </a>
                         </li>
                         <li>
-                            <a href="{{ route('history.show') }}" class="flex items-center p-2 text-gray-700 hover:bg-gray-100 rounded-lg">
+                            <a href="{{ route('history.show') }}" class="flex items-center p-2 bg-black text-white rounded-lg">
                                 <span class="ml-3">My History</span>
                             </a>
                         </li>
@@ -39,7 +39,7 @@
 
             <!-- Main Content -->
             <div class="w-full sm:w-3/4 bg-white shadow-lg rounded-lg p-6">
-            @include('profile.partials.update-order-form')  
+            @include('profile.partials.update-history-form')  
             </div>
         </div>
         </div>
