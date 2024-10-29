@@ -25,13 +25,22 @@ class CartController extends Controller
     {
         $id = $request->input('id'); // Get the id from the form input
         $userId = Auth::id();
-        $cartEntries = Auth::user()->products_in_cart()->findOrFail($id); // Get the product in the cart
-    
-        $cartEntries->pivot->product_amount += 1; // Increase the amount
-        $cartEntries->pivot->save(); // Save the updated pivot
-    
-        return redirect()->route('profile.cart')->with('status', 'Product amount increased successfully');
+        $cartEntry = Auth::user()->products_in_cart()->findOrFail($id); // Get the product in the cart
+
+        // Get the current amount and stock
+        $currentAmount = $cartEntry->pivot->product_amount;
+        $productStock = $cartEntry->stock; // Assuming you have a relationship to access the stock
+
+        // Check if the current amount can be increased without exceeding the stock
+        if ($currentAmount < $productStock) {
+            $cartEntry->pivot->product_amount += 1; // Increase the amount
+            $cartEntry->pivot->save(); // Save the updated pivot
+            return redirect()->route('profile.cart')->with('status', 'Product amount increased successfully');
+        } else {
+            return redirect()->route('profile.cart')->with('error', 'Cannot increase quantity over stock limit');
+        }
     }
+
 
     public function decreaseAmount(Request $request)
     {
