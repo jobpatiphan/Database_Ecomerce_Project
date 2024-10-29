@@ -64,7 +64,7 @@ class ProductSeeder extends Seeder
             'name' => 'Nike Air Force 1 High "Pastel Dream"',
             'price' => 130.00,
             'stock' => 67,
-            'description' => 'Description here.',
+            'description' => 'Step into a dream with the Nike Air Force 1 High "Pastel Dream." This iconic high-top sneaker is reimagined with a dreamy pastel color palette, featuring a white leather upper, pink accents, and a vibrant iridescent sole. The shoes clean lines and classic silhouette are elevated with a touch of whimsy, making it the perfect choice for those who want to add a pop of color to their wardrobe.',
             'photo' => 'products/shoes_7.png'
         ]);
 
