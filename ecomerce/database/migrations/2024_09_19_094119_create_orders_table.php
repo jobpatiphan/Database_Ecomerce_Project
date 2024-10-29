@@ -17,6 +17,9 @@ return new class extends Migration
             //$table->foreignId('product_id')->constrained('products')->onDelete('cascade')
             $table->double('total_price');
             //$table->int('product_price')->references('price')->on('products');
+            
+            $table->boolean('paid')->default(false); // Corrected this line
+            $table->string('session')->default('none');
             $table->timestamps();
         });
     }

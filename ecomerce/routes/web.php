@@ -61,12 +61,7 @@ Route::middleware('auth')->group(function () {
 });
 
 
-Route::get('/orders/{order}', [OrderController::class, 'getOrderEntries'])->name('order.show');
 
-Route::middleware('auth')->group(function () {
-    Route::post('/checkout', [OrderController::class, 'checkout'])->name('checkout');
-    Route::get('/order/success', [OrderController::class, 'orderSuccess'])->name('order.success');
-});
 
 Route::get('/cart', [CartController::class, 'index'])->name('profile.cart');
 
@@ -86,5 +81,20 @@ Route::get('/wishlist', [WishlistController::class, 'index'])->name('profile.wis
 Route::delete('/wishlist/drop', [WishlistController::class, 'dropProduct'])->name('profile.dropWishlist');
 
 // Load authentication routes
+
+Route::post('/order/paid/{id}', [OrderController::class, 'pay'])->name('profile.orderPayment');
+
+// Define your route to accept POST requests
+Route::delete('/order/cancel', [OrderController::class, 'cancel'])->name('profile.orderCancel');
+
+
+Route::get('/orders/{order}', [OrderController::class, 'getOrderEntries'])->name('order.show');
+
+Route::middleware('auth')->group(function () {
+    Route::post('/checkout', [OrderController::class, 'checkout'])->name('checkout');
+    Route::get('/order/success', [OrderController::class, 'orderSuccess'])->name('order.success');
+});
+
+Route::get('/history', [OrderController::class, 'indexHistory'])->name('history.show');
 
 require __DIR__.'/auth.php';

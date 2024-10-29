@@ -17,13 +17,33 @@ class OrderController extends Controller
     {
         $user = Auth::user();
         $orders = Order::where('user_id', $user->id)->get();
-
+        
         return view('profile.order', compact('user', 'orders'));     
     }
+    public function indexHistory()
+    {
+        $user = Auth::user();
+        $orders = Order::where('user_id', $user->id)->get();
+        
+        return view('profile.history', compact('user', 'orders'));     
+    }
+
+
+
     public function getOrderEntries($id)
-{
+{       
+    $user = Auth::user();
     // ดึงข้อมูลจาก order_entry_products โดยใช้ Query Builder
     $orderEntries = DB::table('order_entry_products')->where('order_id', $id)->get();
+
+    $order = Order::where('user_id', $user->id)
+                ->where('id',$id)
+                ->get()
+                ->first();
+    // $order = DB::table('orders')
+    //             ->where('orders.id', $id) // เพิ่มเงื่อนไขตาม order_id
+    //             ->select('orders.paid')
+    //             ->get();
 
     // ตรวจสอบว่ามี order entries หรือไม่
     if ($orderEntries->isEmpty()) {
@@ -38,6 +58,10 @@ class OrderController extends Controller
                 ->where('order_entry_products.order_id', $id) // เพิ่มเงื่อนไขตาม order_id
                 ->select('products.*', 'order_entry_products.product_amount')
                 ->get();
+
+    return view('order.show', compact('user','orderEntries', 'products','order'));
+    }
+    
     // สร้างอาเรย์ที่จะเก็บข้อมูลผลิตภัณฑ์รวมถึงค่าที่ซ้ำ
     // $productDetails = [];
 
@@ -51,8 +75,57 @@ class OrderController extends Controller
     //     }
     // }
 
-    return view('order.show', compact('orderEntries', 'products'));
+    public function pay($id)
+{
+    $user = Auth::user();
+
+    // Fetch the user's order
+    $order = Order::where('user_id', $user->id)
+                ->where('id', $id)
+                ->first();
+
+    // Check if the order exists and is unpaid
+    if ($order && $order->paid == 0) {
+        // Update both 'paid' status and 'session' in the orders table
+        $order->update([
+            'paid' => 1,
+            'session' => 'packing',
+            
+        ]);
+
+        return redirect()->route('order.show', $id)->with('status', 'Order paid successfully');
     }
+
+    return redirect()->route('order.show', $id)->withErrors('Unable to process payment for the order');
+}
+
+    public function cancel(Request $request)
+{
+    $user = Auth::user();
+    $id = $request->input('id');  // Get the order ID from the form input
+
+    // Fetch the user's order
+    $order = Order::where('user_id', $user->id)
+                ->where('id', $id)
+                ->first();
+
+    if ($order) {
+        // Delete order entries from order_entry_products table
+        DB::table('order_entry_products')->where('order_id', $id)->delete();
+
+        // Delete the order itself
+        $order->delete();
+
+        return redirect()->route('profile.order')->with('status', 'Order canceled successfully');
+    }
+
+    return redirect()->route('order.show', $id)->withErrors('Unable to cancel the order');
+}
+
+
+
+    
+
 
     public function checkout(Request $request)
     {
