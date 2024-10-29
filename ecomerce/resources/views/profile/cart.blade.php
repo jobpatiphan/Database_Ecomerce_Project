@@ -119,18 +119,27 @@
                                             <span class="text-gray-600">Selected Items Total</span>
                                             <span class="font-medium text-gray-800" x-text="'$' + calculateTotal().toFixed(2)"></span>
                                         </div>
-                                        <div class="flex justify-end mt-6">
-                                            <form action="{{ route('checkout') }}" method="POST">
-                                                @csrf
-                                                <input type="hidden" name="selected_items" x-bind:value="JSON.stringify(Array.from(selectedItems))">
-                                                <button type="submit" 
-                                                        class="bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition-colors font-medium"
-                                                        x-bind:disabled="selectedItems.size === 0"
-                                                        x-bind:class="{'opacity-50 cursor-not-allowed': selectedItems.size === 0}">
-                                                    Proceed to Checkout
-                                                </button>
-                                            </form>
-                                        </div>
+                                        @if ($user->address === null)
+                                            <div class="flex items-center justify-center h-full p-4 border border-yellow-400 bg-yellow-100 text-yellow-800 rounded-lg">
+                                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4m0 4h.01M21 12c0 4.418-3.582 8-8 8s-8-3.582-8-8 3.582-8 8-8 8 3.582 8 8z" />
+                                                </svg>
+                                                <span class="text-gray-600 font-semibold">No address found. Please add an address before proceeding to checkout.</span>
+                                            </div>
+                                        @else
+                                            <div class="flex justify-end mt-6">
+                                                <form action="{{ route('checkout') }}" method="POST">
+                                                    @csrf
+                                                    <input type="hidden" name="selected_items" x-bind:value="JSON.stringify(Array.from(selectedItems))">
+                                                    <button type="submit" 
+                                                            class="bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition-colors font-medium"
+                                                            x-bind:disabled="selectedItems.size === 0"
+                                                            x-bind:class="{'opacity-50 cursor-not-allowed': selectedItems.size === 0}">
+                                                        Proceed to Checkout
+                                                    </button>
+                                                </form>
+                                            </div>
+                                        @endif
                                     </div>
                                 </td>
                             </tr>

@@ -172,7 +172,7 @@ class OrderController extends Controller
 
             DB::commit();
 
-            return redirect()->route('profile.order');
+            return redirect()->route('order.show', $order->id);
 
         } catch (\Exception $e) {
             DB::rollBack();
