@@ -49,53 +49,47 @@
                     <div class="col-span-4 bg-gray-100 p-6 shadow-lg rounded-lg">
                         <h2 class="text-lg font-semibold mb-4">Summary</h2>
                         <div class="flex justify-between py-2 border-t">
-                            <span>Subtotal</span>
+                            <span>Total</span>
                             <span>${{ number_format($sum, 2) }}</span>
                         </div>
-                        <div class="flex justify-between py-2 border-t">
-                            <span>Grand Total</span>
-                            <span>${{ number_format($sum, 2) }}</span>
+                        <div class="flex flex-wrap justify-between gap-4">
+                            @if($order->session == 'success')
+                                <form action="{{ route('history.show') }}" method="GET" class="inline">
+                                    @csrf
+                                    <button type="submit" class="transition-all duration-200 bg-gray-500 text-white px-6 py-3 rounded-lg hover:bg-gray-600 shadow-lg hover:shadow-xl active:scale-95 font-semibold">
+                                        Back
+                                    </button>
+                                </form>
+                            @else
+                                <form action="{{ route('profile.order') }}" method="GET" class="inline">
+                                    @csrf
+                                    <button type="submit" class="transition-all duration-200 bg-gray-500 text-white px-6 py-3 rounded-lg hover:bg-gray-600 shadow-lg hover:shadow-xl active:scale-95 font-semibold">
+                                        Back
+                                    </button>
+                                </form>
+                            @endif
+                            
+                            @if($order->paid == 0)
+                                <div class="ml-auto flex gap-4">
+                                    <form action="{{ route('profile.orderCancel') }}" method="POST">
+                                        @csrf
+                                        @method('DELETE')
+                                        <input type="hidden" name="id" value="{{ $order->id }}">
+                                        <button type="submit" class="transition-all duration-200 bg-red-500 text-white px-6 py-3 rounded-lg hover:bg-red-600 shadow-lg hover:shadow-xl active:scale-95 font-semibold">
+                                            Cancel
+                                        </button>
+                                    </form>
+                                    <form action="{{ route('profile.orderPayment', ['id' => $order->id]) }}" method="POST">
+                                        @csrf
+                                        <button type="submit" class="transition-all duration-200 bg-blue-500 text-white px-6 py-3 rounded-lg hover:bg-blue-600 shadow-lg hover:shadow-xl active:scale-95 font-semibold">
+                                            Pay
+                                        </button>
+                                    </form>
+                                </div>
+                            @endif
                         </div>
-                        @if($order->paid == 0)
-                        <form action="{{ route('profile.orderPayment', ['id' => $order->id]) }}" method="POST">
-                            @csrf
-                            <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600">
-                                Pay
-                            </button>
-                        </form>
-                        <form action="{{ route('profile.orderCancel') }}" method="POST">
-                            @csrf
-                            @method('DELETE') <!-- Spoof DELETE request -->
-                            <input type="hidden" name="id" value="{{ $order->id }}">
-                            <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600">
-                                Cancel
-                            </button>
-                        </form>
-
-
-                        @endif
-                    @if($order->session == 'success')
-                        <form action="{{ route('history.show') }}" method="GET" class="inline">
-                            
-                            @csrf
-                            <button type="submit" class="flex items-center p-2 text-white bg-blue-500 hover:bg-blue-600 rounded-lg">
-                                <span class="ml-3">Back</span>
-                            </button>
-                           
-                        </form>
-                    @else
-                        <form action="{{ route('profile.order') }}" method="GET" class="inline">
-                            
-                            @csrf
-                            <button type="submit" class="flex items-center p-2 text-white bg-blue-500 hover:bg-blue-600 rounded-lg">
-                                <span class="ml-3">Back</span>
-                            </button>
-                           
-                        </form>
-                    @endif
-
-                        
-
+                        </div>
+                        </div>
                     </div>
                 </div>
             </div>

@@ -59,10 +59,8 @@
                                     data-quantity="{{ $entry->pivot->product_amount }}">
                                     <td class="py-6 px-6 text-center">
                                         <input type="checkbox" 
-                                            @change="toggleItem({{ $entry->id }}, $event.target.checked); 
-                                                        handleCheckboxChange({{ $entry->id }}, $event.target.checked)"
-                                            class="form-checkbox h-5 w-5 text-blue-600 rounded border-gray-300 focus:ring-blue-500"
-                                            {{ $entry->pivot->in_order === 'yes' ? 'checked' : '' }}>
+                                            @change="toggleItem({{ $entry->id }}, $event.target.checked)"
+                                            class="form-checkbox h-5 w-5 text-blue-600 rounded border-gray-300 focus:ring-blue-500">
                                     </td>
                                     <td class="py-6 px-6">
                                         <div class="flex items-center">
@@ -100,66 +98,56 @@
                                         ${{ number_format((float)$entry->price * (float)$entry->pivot->product_amount, 2) }}
                                     </td>
                                     <td class="py-6 text-center">
-                                    @if ($entry->pivot->in_order === 'yes')
                                         <form action="{{ route('profile.drop') }}" method="POST">
                                             @csrf
                                             @method('DELETE')
                                             <input type="hidden" name="id" value="{{ $entry->id }}">
-                                            <button class="text-red-500 hover:text-red-700 transition-colors">
+                                            <button type="submit" class="text-red-500 hover:text-red-700 transition-colors">
                                                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
                                                 </svg>
                                             </button>
                                         </form>
-                                    @else
-                                        <span class="text-gray-500 cursor-not-allowed">Cannot delete</span>
-                                    @endif
-                                </td>
+                                    </td>
                                 </tr>
-                               @endforeach
-                               <tr>
-                                   <td colspan="6">
-                                       <div class="bg-gray-50 p-6 mt-8 rounded-lg">
-                                           <h2 class="text-lg font-semibold mb-4 text-gray-800">Order Summary</h2>
-                                           <div class="flex justify-between py-3 border-t border-gray-200">
-                                               <span class="text-gray-600">Selected Items Total</span>
-                                               <span class="font-medium text-gray-800" x-text="'$' + calculateTotal().toFixed(2)"></span>
-                                           </div>
-                                           <div class="flex justify-end mt-6">
-                                               <form action="{{ route('checkout') }}" method="POST">
-                                                   @csrf
-                                                   <input type="hidden" name="selected_items" x-bind:value="JSON.stringify(Array.from(selectedItems))">
-                                                   <button type="submit" 
-                                                           class="bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition-colors font-medium"
-                                                           x-bind:disabled="selectedItems.size === 0"
-                                                           x-bind:class="{'opacity-50 cursor-not-allowed': selectedItems.size === 0}">
-                                                       Proceed to Checkout
-                                                   </button>
-                                               </form>
-                                           </div>
-                                       </div>
-                                   </td>
-                               </tr>
-                           @endif
+                            @endforeach
+                            <tr>
+                                <td colspan="6">
+                                    <div class="bg-gray-50 p-6 mt-8 rounded-lg">
+                                        <h2 class="text-lg font-semibold mb-4 text-gray-800">Order Summary</h2>
+                                        <div class="flex justify-between py-3 border-t border-gray-200">
+                                            <span class="text-gray-600">Selected Items Total</span>
+                                            <span class="font-medium text-gray-800" x-text="'$' + calculateTotal().toFixed(2)"></span>
+                                        </div>
+                                        @if ($user->address === null)
+                                            <div class="flex items-center justify-center h-full p-4 border border-yellow-400 bg-yellow-100 text-yellow-800 rounded-lg">
+                                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4m0 4h.01M21 12c0 4.418-3.582 8-8 8s-8-3.582-8-8 3.582-8 8-8 8 3.582 8 8z" />
+                                                </svg>
+                                                <span class="text-gray-600 font-semibold">No address found. Please add an address before proceeding to checkout.</span>
+                                            </div>
+                                        @else
+                                            <div class="flex justify-end mt-6">
+                                                <form action="{{ route('checkout') }}" method="POST">
+                                                    @csrf
+                                                    <input type="hidden" name="selected_items" x-bind:value="JSON.stringify(Array.from(selectedItems))">
+                                                    <button type="submit" 
+                                                            class="bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition-colors font-medium"
+                                                            x-bind:disabled="selectedItems.size === 0"
+                                                            x-bind:class="{'opacity-50 cursor-not-allowed': selectedItems.size === 0}">
+                                                        Proceed to Checkout
+                                                    </button>
+                                                </form>
+                                            </div>
+                                        @endif
+                                    </div>
+                                </td>
+                            </tr>
+                        @endif
                        </tbody>
                    </table>
                </div>
            </div>
-       </div>
-       <script>
-            function handleCheckboxChange(itemId, isChecked) {
-                fetch(`/cart/update-in-order`, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'X-CSRF-TOKEN': '{{ csrf_token() }}'
-                    },
-                    body: JSON.stringify({
-                        id: itemId,
-                        in_order: isChecked ? 'yes' : 'no'
-                    })
-                });
-            }
-        </script>
+       </div>  
    </main>
 </x-app-layout>

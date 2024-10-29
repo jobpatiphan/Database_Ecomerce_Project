@@ -78,10 +78,6 @@ Route::post('/cart/increase', [CartController::class, 'increaseAmount'])->name('
 Route::post('/cart/decrease', [CartController::class, 'decreaseAmount'])->name('profile.decreaseAmount');
 //drop
 Route::delete('/cart/drop', [CartController::class, 'dropProduct'])->name('profile.drop');
-//checkout knack
-
-Route::post('/cart/update-in-order', [CartController::class, 'updateInOrder']);
-
 
 
 

@@ -17,4 +17,42 @@ class WishListController extends Controller
         
         return view('profile.wishlist', compact('wishListEntries', 'userId'));
     }
+    public function addToWishlist(Request $request)
+    {
+        $user = Auth::user();
+        $product = Product::find($request->product_id);
+
+        // Check if product exists and is not already in the wishlist
+        if ($product && !$user->products_in_wish_list()->where('product_id', $product->id)->exists()) {
+            $user->products_in_wish_list()->attach($product->id);
+            return redirect()->back()->with('success', 'Product added to your wishlist!');
+        }
+
+        return redirect()->back()->with('error', 'Product already in your wishlist or not found.');
+    }
+
+    // Remove product from wishlist
+    public function removeFromWishlist(Request $request)
+    {
+        $user = Auth::user();
+        $product = Product::find($request->product_id);
+
+        // Check if product exists and is in the wishlist
+        if ($product && $user->products_in_wish_list()->where('product_id', $product->id)->exists()) {
+            $user->products_in_wish_list()->detach($product->id);
+            return redirect()->back()->with('success', 'Product removed from your wishlist!');
+        }
+
+        return redirect()->back()->with('error', 'Product not found in your wishlist.');
+    }
+    public function dropProduct(Request $request)
+    {
+        $id = $request->input('id'); // Get the product ID from the form input
+        $user = Auth::user(); // Get the authenticated user
+    
+        // Detach the product from the user's cart (pivot table), instead of deleting the product
+        $user->products_in_wish_list()->detach($id);
+    
+        return redirect()->route('profile.wishList')->with('status', 'Product removed from cart successfully');
+    }
 }
