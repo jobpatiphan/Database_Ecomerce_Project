@@ -9,8 +9,6 @@
                     <li><a href="{{ route('dashboard') }}" class="text-black">Home</a></li>
                     <li><a href="{{ route('product.index') }}" class="text-black">Shop</a></li>
                     <li><a href="{{ route('contactUs.index') }}" class="text-black">Contact Us</a></li>
-
-
                 </ul>
             </nav>
         </div>
@@ -55,13 +53,6 @@
                     </form>
                 </div>
             </div>
-
-
-
-
-
-
-
         </div>
     </header>
 </nav>

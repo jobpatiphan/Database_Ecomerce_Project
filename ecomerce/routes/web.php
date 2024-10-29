@@ -10,8 +10,102 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\WishlistController;
 use App\Http\Controllers\AddressController;
+use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\AdminProductController;
+use App\Http\Controllers\AdminOrderController;
+use App\Models\User;
 use App\Http\Controllers\ContactUs;
 use App\Http\Controllers\ContactUsController;
+
+Route::get('/', function () {
+    if (Auth::check()) {
+        $user = User::find(auth()->id()); 
+        if (!$user)
+        {
+            return app(WelcomeController::class)->index();
+        }
+        else if ($user->is_admin) {
+            return redirect('/admin/products');
+        }
+        else {
+            return redirect('/commercefootshop');
+    }
+}
+    else {
+        return app(WelcomeController::class)->index();
+    }
+
+});
+
+
+Route::middleware(['auth'])->group(function () {
+    Route::group([], function () {
+        Route::get('/admin/products', function () {
+            $user = User::find(auth()->id());
+            if ($user && $user->is_admin) {
+                return app(AdminProductController::class)->index();
+            }
+            abort(403, 'Unauthorized action.');
+        })->name('admin.products.index');
+
+        Route::get('/admin/products/create', function () {
+            $user = User::find(auth()->id());
+            if ($user && $user->is_admin) {
+                return app(AdminProductController::class)->create();
+            }
+            abort(403, 'Unauthorized action.');
+        })->name('admin.products.create');
+
+        Route::post('/admin/products', function (\Illuminate\Http\Request $request) {
+            $user = User::find(auth()->id());
+            if ($user && $user->is_admin) {
+                return app(AdminProductController::class)->store($request);
+            }
+            abort(403, 'Unauthorized action.');
+        })->name('admin.products.store');
+
+        Route::get('/admin/products/{product}/edit', function (App\Models\Product $product) {
+            $user = User::find(auth()->id());
+            if ($user && $user->is_admin) {
+                return app(AdminProductController::class)->edit($product);
+            }
+            abort(403, 'Unauthorized action.');
+        })->name('admin.products.edit');
+
+        Route::put('/admin/products/{product}', function (\Illuminate\Http\Request $request, App\Models\Product $product) {
+            $user = User::find(auth()->id());
+            if ($user && $user->is_admin) {
+                return app(AdminProductController::class)->update($request, $product);
+            }
+            abort(403, 'Unauthorized action.');
+        })->name('admin.products.update');
+
+        Route::delete('/admin/products/{product}', function (App\Models\Product $product) {
+            $user = User::find(auth()->id());
+            if ($user && $user->is_admin) {
+                return app(AdminProductController::class)->destroy($product);
+            }
+            abort(403, 'Unauthorized action.');
+        })->name('admin.products.destroy');
+
+        Route::get('/admin/orders', function () {
+            $user = User::find(auth()->id());
+            if ($user && $user->is_admin) {
+                return app(AdminOrderController::class)->index();
+            }
+            abort(403, 'Unauthorized action.');
+        })->name('admin.orders');
+
+        Route::post('/admin/orders/{order}/update-session', function (\Illuminate\Http\Request $request, $order) {
+            $user = User::find(auth()->id());
+            if ($user && $user->is_admin) {
+                return app(AdminOrderController::class)->updateSession($request, $order);
+            }
+            abort(403, 'Unauthorized action.');
+        })->name('admin.orders.updateSession');
+    });
+});
+
 
 Route::put('/profile/address', [ProfileController::class, 'updateAddress'])->name('profile.updateAddress');
 
@@ -36,14 +130,6 @@ Route::post('/cart/add', [CartController::class, 'add'])->name('cart.add');
 
 // Product show route
 Route::get('products/{productId}', [ProductController::class, 'show'])->name('product.show');
-
-
-
-// Combined root route
-Route::get('/', function () {
-    return auth()->check() ? redirect('/commercefootshop') : app(WelcomeController::class)->index();
-})->name('welcome');
-
 
 
 

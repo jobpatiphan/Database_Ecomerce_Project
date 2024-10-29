@@ -19,7 +19,7 @@ return new class extends Migration
             //$table->int('product_price')->references('price')->on('products');
             
             $table->boolean('paid')->default(false); // Corrected this line
-            $table->string('session')->default('none');
+            $table->string('session')->default("none");
             $table->timestamps();
         });
     }
