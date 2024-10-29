@@ -52,7 +52,7 @@
     <div class="container mx-auto p-4">
         <div class="product-page flex">
             <!-- Product Image -->
-            <div class="w-1/2">
+            <div class="w-1/4">
                 <img src="{{ asset($product->photo) }}" alt="{{ $product->name }}" class="w-full h-auto rounded-lg">
             </div>
 

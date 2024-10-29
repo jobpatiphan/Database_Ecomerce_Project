@@ -13,10 +13,10 @@ class ProductSeeder extends Seeder
     public function run(): void
     {
         Product::create([
-            'name' => 'Product 1',
-            'price' => 100.00,
-            'stock' => 50,
-            'description' => 'Description here.',
+            'name' => 'Cyber Pulse High-Tops',
+            'price' => 199.99,
+            'stock' => 59,
+            'description' => 'These appear to be high-top futuristic sneakers with LED or light-up elements, featuring a cyberpunk/sci-fi aesthetic. The shoes are predominantly white/mint colored with glowing turquoise accent lights along the sole, midsole, and upper design elements. They also have some yellow lighting accents. They appear to be athletic or lifestyle sneakers with a chunky, tech-forward design that would fit right into a cyberpunk or future-tech fashion style.',
             'photo' => 'img/shoes_1.jpg'
         ]);
 
