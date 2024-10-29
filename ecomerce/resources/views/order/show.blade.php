@@ -11,7 +11,7 @@
                         @foreach($products as $item)
                             <li class="mb-4">
                                 <div class="flex items-center">
-                                    <img src="{{ asset($item->photo) }}" class="w-16 h-16 object-cover rounded-md" alt="{{ $item->name }}">
+                                    <img src="{{ asset('storage/' . $item->photo) }}" class="w-16 h-16 object-cover rounded-md" alt="{{ $item->name }}">
                                     <div class="ml-4">
                                         <h4 class="font-semibold">{{ $item->name }}</h4>
                                         <p class="text-sm text-gray-600">Qty: {{ $item->product_amount }}</p>

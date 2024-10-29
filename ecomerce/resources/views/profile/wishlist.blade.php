@@ -61,7 +61,7 @@
 
                                                 <div class="flex items-center space-x-4">
                                                     <div class="w-24 h-24 bg-gray-200 overflow-hidden rounded-lg">
-                                                        <img src="{{ asset($entry->photo) }}" alt="{{ $entry->name }}" class="w-full h-full object-cover"> <!-- Adjusting object-fit -->
+                                                        <img src="{{ asset('storage/' . $entry->photo) }}" alt="{{ $entry->name }}" class="w-full h-full object-cover"> <!-- Adjusting object-fit -->
                                                     </div>
 
                                                     <div class="flex-1">

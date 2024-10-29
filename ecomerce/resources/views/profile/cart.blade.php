@@ -65,7 +65,7 @@
                                     <td class="py-6 px-6">
                                         <div class="flex items-center">
                                             <div class="w-20 h-20 bg-gray-100 rounded-lg overflow-hidden flex items-center justify-center">
-                                                <img src="{{ asset($entry->photo) }}" alt="{{ $entry->name }}" class="object-cover w-full h-full">
+                                                <img src="{{ asset('storage/' . $entry->photo) }}" alt="{{ $entry->name }}" class="object-cover w-full h-full">
                                             </div>
                                             <div class="ml-6">
                                                 <p class="font-medium text-gray-800">{{ $entry->name }}</p>

@@ -53,7 +53,7 @@
         <div class="product-page flex">
             <!-- Product Image -->
             <div class="w-1/4">
-                <img src="{{ asset($product->photo) }}" alt="{{ $product->name }}" class="w-full h-auto rounded-lg">
+                <img src="{{ asset('storage/' . $product->photo) }}" alt="{{ $product->name }}" class="w-full h-auto rounded-lg">
             </div>
 
             <!-- Product Details -->
@@ -130,7 +130,7 @@
                                 @endif
                                 <div class="bg-gray-200 h-96 flex flex-col justify-between items-center p-4 rounded-lg">
                                     <!-- Display Product Image -->
-                                    <img src="{{ asset($item->photo) }}" alt="{{ $item->name }}" class="w-64 h-64 object-contain rounded-lg">
+                                    <img src="{{ asset('storage/' . $item->photo) }}" alt="{{ $item->name }}" class="w-64 h-64 object-contain rounded-lg">
 
                                     <!-- Product Name -->
                                     <h3 class="text-lg font-semibold">{{ $item->name }}</h3>

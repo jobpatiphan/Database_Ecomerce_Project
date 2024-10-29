@@ -28,7 +28,7 @@ Route::get('/', function () {
             return redirect('/admin/products');
         }
         else {
-            return redirect('/commercefootshop');
+            return redirect('/com');
     }
 }
     else {
@@ -96,7 +96,7 @@ Route::middleware(['auth'])->group(function () {
             abort(403, 'Unauthorized action.');
         })->name('admin.orders');
 
-        Route::post('/admin/orders/{order}/update-session', function (\Illuminate\Http\Request $request, $order) {
+        Route::post('/admin/orders/{order}/update-session', function (\Illuminate\Http\Request $request, App\Models\Order $order) {
             $user = User::find(auth()->id());
             if ($user && $user->is_admin) {
                 return app(AdminOrderController::class)->updateSession($request, $order);
@@ -136,7 +136,7 @@ Route::get('products/{productId}', [ProductController::class, 'show'])->name('pr
 Route::post('/profile/photo/update', [UserController::class, 'updateProfilePhoto'])->name('profile.photo.update');
 // Dashboard route with middleware
 Route::middleware(['auth', 'verified'])->group(function () {
-    Route::get('/commercefootshop', [DashboardController::class, 'index'])->name('dashboard');
+    Route::get('/com', [DashboardController::class, 'index'])->name('dashboard');
 });
 
 
