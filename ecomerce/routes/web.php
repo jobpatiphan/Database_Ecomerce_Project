@@ -73,6 +73,10 @@ Route::post('/cart/decrease', [CartController::class, 'decreaseAmount'])->name('
 Route::delete('/cart/drop', [CartController::class, 'dropProduct'])->name('profile.drop');
 //checkout knack
 
+Route::post('/cart/update-in-order', [CartController::class, 'updateInOrder']);
+
+
+
 
 //wish list part
 Route::get('/wishlist', [WishlistController::class, 'index'])->name('profile.wishList');
