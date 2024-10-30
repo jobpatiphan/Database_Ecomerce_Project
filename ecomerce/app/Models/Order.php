@@ -29,12 +29,14 @@ class Order extends Model
     {
         return $this->belongsTo(User::class);
     }
+    
     public function products_in_order()
     {
-        return $this->belongsToMany(Product::class, 'order_entry_products' , 'order_id' , 'product_id')
+        return $this->belongsToMany(Product::class, 'order_entry_products', 'order_id', 'product_id')
                     ->withPivot('product_amount')
                     ->withTimestamps();
     }
+
     // // Relation to Product model (assuming many-to-one relationship)
     // public function product()
     // {

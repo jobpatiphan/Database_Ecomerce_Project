@@ -20,15 +20,17 @@ class OrderController extends Controller
         
         return view('profile.order', compact('user', 'orders'));     
     }
+
     public function indexHistory()
     {
         $user = Auth::user();
-        $orders = Order::where('user_id', $user->id)->get();
-        
-        return view('profile.history', compact('user', 'orders'));     
+        // Eager load products_in_order instead of orderEntries
+        $orders = Order::with('products_in_order') // Change to 'products_in_order'
+                        ->where('user_id', $user->id)
+                        ->get();
+
+        return view('profile.history', compact('user', 'orders'));
     }
-
-
 
     public function getOrderEntries($id)
 {       
@@ -122,11 +124,6 @@ class OrderController extends Controller
     return redirect()->route('order.show', $id)->withErrors('Unable to cancel the order');
 }
 
-
-
-    
-
-
     public function checkout(Request $request)
     {
         $user = auth()->user();
@@ -188,4 +185,5 @@ class OrderController extends Controller
         return view('order.success');  // Create a view to show order success
     }
 
+    
 }
