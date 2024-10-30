@@ -12,11 +12,10 @@
                     <div>
                         <h4 class="font-bold mb-2">Information</h4>
                         <ul class="space-y-1">
-                            <li><a href="#" class="text-sm">My Account</a></li>
-                            <li><a href="#" class="text-sm">Login</a></li>
-                            <li><a href="#" class="text-sm">My cart</a></li>
-                            <li><a href="#" class="text-sm">My Wishlist</a></li>
-                            <li><a href="#" class="text-sm">Checkout</a></li>
+                            <li><a href="{{ route('profile.edit') }}" class="text-sm">My Account</a></li>
+                            <li><a href="{{ route('profile.cart') }}" class="text-sm">My cart</a></li>
+                            <li><a href="{{ route('profile.wishList') }}" class="text-sm">My Wishlist</a></li>
+                            <li><a href="{{ route('profile.order') }}" class="text-sm">My Order</a></li>
                         </ul>
                     </div>
                 </div>
