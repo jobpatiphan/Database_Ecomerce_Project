@@ -12,6 +12,7 @@ use App\Http\Controllers\WishlistController;
 use App\Http\Controllers\AddressController;
 use App\Http\Controllers\ContactUs;
 use App\Http\Controllers\ContactUsController;
+use App\Http\Controllers\FooterController;
 
 Route::put('/profile/address', [ProfileController::class, 'updateAddress'])->name('profile.updateAddress');
 
@@ -29,10 +30,16 @@ Route::get('/products', [ProductController::class, 'index'])->name('product.inde
 Route::get('/contactUs', [ContactUsController::class, 'Goto'])->name('contactUs.index');
 Route::get('/sendUs', [ContactUsController::class, 'send'])->name('senD');
 
+//footer
+Route::get('/', [ContactUsController::class, 'send'])->name('senD');
+Route::get('/sendUs', [ContactUsController::class, 'send'])->name('senD');
 
-Route::get('/cart', [CartController::class, 'view'])->name('cart.view');
-Route::post('/cart/add', [CartController::class, 'add'])->name('cart.add');
 
+Route::get('/Profile',  [ProfileController::class, 'edit'])->name('acc.view');
+Route::get('/Login2', [FooterController::class, 'edit'])->name('login.view');
+Route::get('/MyCart', [FooterController::class, 'mycart'])->name('mycart.view');
+Route::get('/MyWishlist', [FooterController::class, 'mywishlist'])->name('mywishlist.view');
+Route::get('/orders2', [OrderController::class, 'getOrderEntries'])->name('checkout.view');
 
 // Product show route
 Route::get('products/{productId}', [ProductController::class, 'show'])->name('product.show');
