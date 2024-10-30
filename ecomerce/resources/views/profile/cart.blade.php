@@ -68,7 +68,7 @@
                                                 <img src="{{ asset('storage/' . $entry->photo) }}" alt="{{ $entry->name }}" class="object-cover w-full h-full">
                                             </div>
                                             <div class="ml-6">
-                                                <p class="font-medium text-gray-800">{{ $entry->name }}</p>
+                                                <a href="{{ route('product.show', $entry) }}" class="text-lg font-semibold text-gray-800 hover:underline">{{ $entry->name }}</a>
                                                 <p class="text-sm text-gray-500 mt-1">Size: {{ $entry->pivot->size }}</p>
                                             </div>
                                         </div>

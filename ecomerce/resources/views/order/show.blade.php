@@ -4,8 +4,39 @@
             <div class="container">
                 <h2 class="text-2xl font-bold mb-6">Order Details</h2>
 
+                <!-- Order Process Tracker (only shows if session is not "none") -->
+                @if(strtolower($order->session) !== 'none')
+                    <div class="flex items-center justify-center my-8">
+                        <!-- Packing -->
+                        <div class="flex flex-col items-center">
+                            <div class="w-8 h-8 rounded-full {{ strtolower($order->session) == 'packing' || strtolower($order->session) == 'transport' || strtolower($order->session) == 'success' ? 'bg-green-500' : 'bg-gray-300' }}"></div>
+                            <p class="mt-2 text-sm font-semibold {{ strtolower($order->session) == 'packing' || strtolower($order->session) == 'transport' || strtolower($order->session) == 'success' ? 'text-green-600' : 'text-gray-600' }}">
+                                Packing
+                            </p>
+                        </div>
+                        <div class="h-1 w-16 {{ strtolower($order->session) == 'transport' || strtolower($order->session) == 'success' ? 'bg-green-500' : 'bg-gray-300' }}"></div>
+
+                        <!-- Transport -->
+                        <div class="flex flex-col items-center">
+                            <div class="w-8 h-8 rounded-full {{ strtolower($order->session) == 'transport' || strtolower($order->session) == 'success' ? 'bg-green-500' : 'bg-gray-300' }}"></div>
+                            <p class="mt-2 text-sm font-semibold {{ strtolower($order->session) == 'transport' || strtolower($order->session) == 'success' ? 'text-green-600' : 'text-gray-600' }}">
+                                Transport
+                            </p>
+                        </div>
+                        <div class="h-1 w-16 {{ strtolower($order->session) == 'success' ? 'bg-green-500' : 'bg-gray-300' }}"></div>
+
+                        <!-- Success -->
+                        <div class="flex flex-col items-center">
+                            <div class="w-8 h-8 rounded-full {{ strtolower($order->session) == 'success' ? 'bg-green-500' : 'bg-gray-300' }}"></div>
+                            <p class="mt-2 text-sm font-semibold {{ strtolower($order->session) == 'success' ? 'text-green-600' : 'text-gray-600' }}">
+                                Success
+                            </p>
+                        </div>
+                    </div>
+                @endif
+
                 <div class="bg-white shadow-md rounded-lg p-4">
-                @php $sum = 0; @endphp  <!-- Initialize the $sum variable -->
+                    @php $sum = 0; @endphp  <!-- Initialize the $sum variable -->
 
                     <ul class="mt-4">
                         @foreach($products as $item)
@@ -31,7 +62,7 @@
                         <p class="text-gray-700">{{ $user->address }}</p>
                     </div>
 
-                    <!-- Address Section -->
+                    <!-- Status Section -->
                     <div class="bg-blue-50 p-4 rounded-md mb-6">
                         <h3 class="text-lg font-semibold mb-2 text-blue-700">Status</h3>
                         
@@ -44,7 +75,6 @@
                         @endif
                     </div>
 
-
                     <!-- Summary Section -->
                     <div class="col-span-4 bg-gray-100 p-6 shadow-lg rounded-lg">
                         <h2 class="text-lg font-semibold mb-4">Summary</h2>
@@ -53,7 +83,7 @@
                             <span>${{ number_format($sum, 2) }}</span>
                         </div>
                         <div class="flex flex-wrap justify-between gap-4">
-                            @if($order->session == 'success')
+                            @if(strtolower($order->session) == 'success')
                                 <form action="{{ route('history.show') }}" method="GET" class="inline">
                                     @csrf
                                     <button type="submit" class="transition-all duration-200 bg-gray-500 text-white px-6 py-3 rounded-lg hover:bg-gray-600 shadow-lg hover:shadow-xl active:scale-95 font-semibold">
@@ -87,8 +117,6 @@
                                     </form>
                                 </div>
                             @endif
-                        </div>
-                        </div>
                         </div>
                     </div>
                 </div>

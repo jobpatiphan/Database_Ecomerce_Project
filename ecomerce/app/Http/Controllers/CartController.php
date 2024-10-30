@@ -59,15 +59,21 @@ class CartController extends Controller
 
 
     public function dropProduct(Request $request)
-    {
-        $id = $request->input('id'); // Get the product ID from the form input
-        $user = Auth::user(); // Get the authenticated user
+{
+    Log::info('Product ID: ' . $request->input('id'));
+    Log::info('Size: ' . $request->input('size'));
+    dd($request->all());
+    $user = Auth::user(); // Get the authenticated user
     
-        // Detach the product from the user's cart (pivot table), instead of deleting the product
-        $user->products_in_cart()->detach($id);
-    
-        return redirect()->route('profile.cart')->with('status', 'Product removed from cart successfully');
-    }
+    // Detach the product with the specified size from the user's cart
+    $user->products_in_cart()
+         ->wherePivot('product_id', $productId)
+         ->wherePivot('size', $size)
+         ->detach();
+
+    return redirect()->route('profile.cart')->with('status', 'Product removed from cart successfully');
+}
+
   
     public function add(Request $request)
     {

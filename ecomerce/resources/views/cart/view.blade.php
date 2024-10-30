@@ -41,6 +41,7 @@
                 <thead>
                     <tr>
                         <th class="py-2 px-4 border-b">Product</th>
+                        <th class="py-2 px-4 border-b">Size</th>
                         <th class="py-2 px-4 border-b">Quantity</th>
                         <th class="py-2 px-4 border-b">Total Price</th>
                         <th class="py-2 px-4 border-b">Actions</th>
@@ -50,14 +51,17 @@
                     @foreach($cartItems as $item)
                         <tr>
                             <td class="py-2 px-4 border-b">{{ $item->name }}</td>
+                            <td class="py-2 px-4 border-b">{{ $item->pivot->size }}</td>
                             <td class="py-2 px-4 border-b">{{ $item->pivot->product_amount }}</td>
                             <td class="py-2 px-4 border-b">${{ number_format($item->pivot->total_price, 2) }}</td>
                             <td class="py-2 px-4 border-b">
-                                <!-- You can add buttons to remove items or update quantities here -->
-                                <form action="{{ route('cart.remove', $item->id) }}" method="POST" class="inline">
+                                <!-- Form to remove the item, including product_id and size as hidden fields -->
+                                <form action="{{ route('cart.drop') }}" method="POST" class="inline">
                                     @csrf
                                     @method('DELETE')
-                                    <button type="submit" class="text-red-500">Remove</button>
+                                    <input type="hidden" name="id" value="{{ $item->id }}">
+                                    <input type="hidden" name="size" value="{{ $item->pivot->size }}">
+                                    <button type="submit" class="text-red-500 hover:underline">Remove</button>
                                 </form>
                             </td>
                         </tr>
