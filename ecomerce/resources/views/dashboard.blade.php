@@ -166,7 +166,7 @@
                 </section>
             </main>
            <!-- Update JavaScript section -->
-@push('scripts')
+           @push('scripts')
 <script>
 $(document).ready(function() {
     const carousel = $('.carousel > div:first-child');
@@ -174,13 +174,19 @@ $(document).ready(function() {
     const dots = $('.nav-dot');
     const overlays = $('.overlay-text');
     const slideCount = {{ count($slides) }};
-    let currentIndex = 1;
+    let currentIndex = 0; // เปลี่ยนเป็น 0
     let intervalId;
     let isAnimating = false;
 
-    // Initialize position
-    carousel.css('transform', `translateX(-100%)`);
-    showOverlay(0);
+    // Initialize position to show first slide
+    initializeCarousel();
+
+    function initializeCarousel() {
+        // Start at first slide
+        carousel.css('transform', 'translateX(-100%)');
+        updateOverlays(0);
+        dots.first().addClass('!bg-white');
+    }
 
     function hideOverlay(index) {
         const overlay = overlays.eq(index + 1);
@@ -193,7 +199,6 @@ $(document).ready(function() {
         description.css('transform', 'translateX(-100px)');
         button.css('transform', 'translateX(-100px)');
 
-        // After content slides out, slide the whole overlay down
         setTimeout(() => {
             overlay.addClass('translate-y-full opacity-0')
                   .removeClass('translate-y-0 opacity-100');
@@ -211,11 +216,9 @@ $(document).ready(function() {
         description.css('transform', 'translateX(100px)');
         button.css('transform', 'translateX(100px)');
         
-        // Slide overlay up
         overlay.removeClass('translate-y-full opacity-0')
                .addClass('translate-y-0 opacity-100');
 
-        // Animate content in with delays
         setTimeout(() => {
             title.css('transform', 'translateX(0)');
             setTimeout(() => {
@@ -228,29 +231,28 @@ $(document).ready(function() {
     }
 
     function updateOverlays(index) {
-        // Hide current overlay
         hideOverlay(currentIndex);
-
-        // Show new overlay after a delay
+        
         setTimeout(() => {
             showOverlay(index);
         }, 300);
 
-        // Update dots
-        dots.removeClass('!bg-white').eq(index).addClass('!bg-white');
+        dots.removeClass('!bg-white')
+            .eq(index)
+            .addClass('!bg-white');
     }
 
     function moveToIndex(index, instant = false) {
         if (isAnimating) return;
         isAnimating = true;
 
-        const realIndex = index % slideCount;
-        const offset = -(index + 1) * 100;
+        const realIndex = (index + slideCount) % slideCount; // แก้ไขการคำนวณ realIndex
+        const offset = -(realIndex + 1) * 100; // ปรับการคำนวณ offset
 
         if (instant) {
             carousel.css('transition', 'none');
             carousel.css('transform', `translateX(${offset}%)`);
-            carousel[0].offsetHeight; // Force reflow
+            carousel[0].offsetHeight;
             carousel.css('transition', '');
         } else {
             carousel.css('transform', `translateX(${offset}%)`);
@@ -259,13 +261,13 @@ $(document).ready(function() {
         updateOverlays(realIndex);
 
         setTimeout(() => {
-            if (index === -1) {
+            if (index < 0) {
                 carousel.css('transition', 'none');
                 carousel.css('transform', `translateX(-${slideCount * 100}%)`);
                 currentIndex = slideCount - 1;
                 carousel[0].offsetHeight;
                 carousel.css('transition', '');
-            } else if (index === slideCount) {
+            } else if (index >= slideCount) {
                 carousel.css('transition', 'none');
                 carousel.css('transform', 'translateX(-100%)');
                 currentIndex = 0;
@@ -278,7 +280,6 @@ $(document).ready(function() {
         }, 500);
     }
 
-    // Autoplay functions remain the same
     function startAutoplay() {
         intervalId = setInterval(() => {
             if (!isAnimating) {
@@ -321,10 +322,8 @@ $(document).ready(function() {
         isAnimating = false;
     });
 
-    // Start autoplay
     startAutoplay();
 
-    // Hover handlers
     $('.carousel').hover(
         function() { stopAutoplay(); },
         function() { startAutoplay(); }

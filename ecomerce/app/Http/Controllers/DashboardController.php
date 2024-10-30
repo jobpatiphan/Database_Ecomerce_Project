@@ -11,25 +11,25 @@ class DashboardController extends Controller
     $products = Product::all();
     $slides = [
         [
-            'image' => '/webpic/hom.png',
-            'title' => 'Nike Air Force 1',
-            'description' => 'Classic Style Meets Modern Comfort',
+            'image' => '/webpic/sanpawat.jpg',
+            'title' => 'CyberStride High-Tops',
+            'description' => 'High-top silhouette for enhanced support',
             'button_text' => 'Shop Now',
-            'button_link' => '#'
+            'button_link' => '/products/15'
         ],
         [
-            'image' => '/webpic/presenter.jpg',
-            'title' => 'New Collection 2024',
-            'description' => 'Discover the latest in athletic innovation',
+            'image' => '/webpic/chinawat.jpg',
+            'title' => 'SHEE Pastel Dream Sneakers',
+            'description' => 'Pastel Dream Collection',
             'button_text' => 'Explore More',
-            'button_link' => '#'
+            'button_link' => '/products/14'
         ],
         [
-            'image' => '/webpic/presenter_walk.jpg',
+            'image' => '/webpic/chiang.jpg',
             'title' => 'Premium Performance',
             'description' => 'Engineered for elite athletes',
             'button_text' => 'View Details',
-            'button_link' => '#'
+            'button_link' => '/shop'
         ],
     ];
     
