@@ -30,12 +30,30 @@
             </header>
 
             <main>
-                <section class="bg-black text-white p-8 flex justify-between items-center">
-                    <h1 class="text-6xl font-bold">Shoes Collection</h1>
-                    <img src="webpic/hom.png" alt="Featured Shoe" class="w-80 h-80 object-contain">
-                </section>
 
-                <section class="p-8" x-data="{ currentIndex: 0, productsPerPage: 2 }">
+                
+                 <!-- Container -->
+                 <div class="relative max-w-full mx-auto">
+                        
+                        <!-- Background Image Section -->
+                        <div class="relative">
+                            <img src="{{ asset('/webpic/presenter_walk.jpg') }}"
+                             alt="Cloudfoam Walking" class="w-full h-auto object-cover">
+
+                            <!-- Overlay Text Section -->
+                            <div class="absolute bottom-8 left-8 bg-white bg-opacity-90 p-4 rounded-lg shadow-md max-w-xs">
+                                <h2 class="text-lg font-bold uppercase text-gray-800">Nike Adapt BB 2.0.</h2>
+                                <p class="text-sm text-gray-600 mt-1">Endless Comfort with Nike Adapt BB 2.0.</p>
+                                <a href="#" class="inline-block mt-4 px-5 py-2 bg-black text-white font-semibold text-sm rounded hover:bg-gray-800 transition">
+                                    Shop Now
+                                </a>
+                            </div>
+                        </div>
+                        
+                        
+                    </div>
+
+                    <section class="p-8" x-data="{ currentIndex: 0, productsPerPage: 2 }">
                     <div class="flex justify-between items-center mb-4">
                         <h2 class="text-2xl font-bold">Shop by Categories</h2>
                     </div>
@@ -75,16 +93,48 @@
                         <!-- Navigation Buttons under Products -->
                         <div class="flex justify-between mt-4">
                             <button @click="currentIndex = Math.max(currentIndex - productsPerPage, 0)"
-                                    class="bg-black text-white px-4 py-2 rounded-l-lg">
+                                    class="bg-black text-white px-6 py-2 rounded-full hover:bg-gray-800 transition-colors">
                                 &larr; Previous
                             </button>
 
                             <button @click="currentIndex = Math.min(currentIndex + productsPerPage, Math.ceil({{ count($products) }} / productsPerPage) - 1)"
-                                    class="bg-black text-white px-4 py-2 rounded-r-lg">
+                                    class="bg-black text-white px-6 py-2 rounded-full hover:bg-gray-800 transition-colors">
                                 Next &rarr;
                             </button>
                         </div>
                     </div>
+                
+
+                <div class="max-w-4xl mx-auto py-12">
+
+                    <!-- Image Section -->
+                    <div class="flex flex-col items-center md:flex-row bg-black shadow-lg rounded-lg overflow-hidden">
+                        <div class="w-full md:w-1/2 p-6 bg-black">
+                            <img src="{{ asset('/webpic/hom.png') }}" alt="Tatum 3" class="w-full h-auto object-cover">
+                        </div>
+                        <div class="w-full md:w-1/2 flex items-center justify-center bg-black text-white p-6">
+                            <img src="{{ asset('/webpic/presenter.jpg') }}" alt="Jayson" class="w-full h-auto object-cover">
+                        </div>
+                    </div>
+
+                    <!-- Text Section -->
+                    <div class="text-center py-8">
+                        <h2 class="text-xl font-semibold text-gray-500">Nike Air Force 1 High 'Bubble Pop' Edition</h2>
+                        <h1 class="text-4xl font-bold text-gray-800 mt-2">Pop Your Reality</h1>
+                        <p class="text-gray-700 mt-4 px-6">
+                        Make a statement with these eye-catching Nike Air Force 1 High sneakers featuring a playful bubble pattern design. The black and white color blocking is accented with vibrant neon green laces and multicolored polka dots, creating a perfect blend of classic style and modern pop art aesthetics.
+                        </p>
+                        <button class="mt-8 px-8 py-3 bg-black text-white font-semibold rounded-full hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-gray-800 focus:ring-opacity-50">
+                            Shop now
+                        </button>
+                    </div>
+
+                </div>
+
+                
+
+                   
+
                 </section>
             </main>
 
