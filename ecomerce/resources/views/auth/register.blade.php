@@ -1,7 +1,7 @@
 <x-guest-layout>
     <div class="flex min-h-screen bg-gray-900">
         <div class="w-1/2">
-            <img src="https://s3-alpha-sig.figma.com/img/0efe/026e/353e7537818d5e90550d66bf1843347d?Expires=1728259200&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=Xn5-J2h-5GpzLCJPYvl7X25p6NLZiBqPPyJP3RuyujJVbjAzP~GTTL483Q5ziwnhKpfcZz3dqpTzvJWMmtMC1xHNuMgiqaccuI6538qMI-OXNEOe~R77MmjBhDiH9LNxvGVRYOtFQKVf~F4bUpimT4P0gos9p8bk7FFoVL~PrZ5sOzxobHBrFw2F9w0mMn-Kxjz6CVCCEwvTEIJqUTcyKaXFPTw~T9qPurJ9wDMdKGH2xVU8pa398~zyfIKV8QM5N4wGJhy4EZhBRdvtrNjrM8278em694l~1MxJ5sFKOGfzpCoKnpbndsIqjk-Y8KZ4YYIgRxYpMJQS3~EWe6eqYQ__" alt="Laravel Logo" class="object-cover w-full h-full">
+            <img src="webpic/regis.png" alt="Laravel Logo" class="object-cover w-full h-full">
         </div>
         <div class="w-full lg:w-1/2 flex items-center justify-center p-8 ">
             <div class="w-full max-w-md ">

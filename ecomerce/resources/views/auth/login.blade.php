@@ -2,7 +2,7 @@
     <div class="flex min-h-screen bg-gray-900">
         <!-- Left side with sneaker image -->
         <div class="w-1/2">
-            <img src="https://s3-alpha-sig.figma.com/img/ec2b/4e6c/3b566d3b0c110ba30472231543eb441c?Expires=1728259200&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=NtyWafz4pvKiGuWg0-HU9cV1jrN8AFD~QC0~2fX6nRt6eH4b1QNTMJL1wQ9QNfDI0kgVCPgc3e9VmE~YnsXjswyR6YYRZKgGgqMaM3q8m49F7b5oS07rq7A~YJJ87Lb1Jc35Cxu-yzI7YF7~CBzubHJ4RJrYlohy9e4XMPF6Uf6M5QZcM~P4fZMabfUE7q~avQ0Cdc-fYLPqrVeu4ODYzAuT82CxMlgXG0Ki7twxyEe5~jh8HaDuRRkdb--JGJM~iCECIbbiDMrXe9gdpPjGlW7QoWxPmy4yZ0IhHByd-eU3mgx28GntiFImwNiNsDdiTSRP71WX7wck~oUb2Tz67g__" alt="Laravel Logo" class="object-cover w-full h-full">
+            <img src="/webpic/logginshoe.png" alt="Laravel Logo" class="object-cover w-full h-full">
         </div>
         <!-- Right side with login form -->
         <div class="w-full lg:w-1/2 flex items-center justify-center p-8 ">

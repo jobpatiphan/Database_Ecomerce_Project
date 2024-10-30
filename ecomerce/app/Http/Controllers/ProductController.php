@@ -19,7 +19,7 @@ class ProductController extends Controller
         }
 
         // Fetch paginated product list (for the index functionality)
-        $products = Product::simplePaginate(6); // Set the number of products per page
+        $products = Product::all(); // Set the number of products per page
 
         return view('product.show', compact('product', 'products'));
     }
@@ -31,4 +31,5 @@ class ProductController extends Controller
 
         return view('shop.shopProduct', compact('products'));
     }
+
 }

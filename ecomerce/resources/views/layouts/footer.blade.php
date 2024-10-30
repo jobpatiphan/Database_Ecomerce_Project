@@ -4,8 +4,8 @@
     
                 <div class="flex justify-between">
                     <div>
-                        <img src="https://s3-alpha-sig.figma.com/img/94e5/e241/a76ee442c6383c739360bfa998e63939?Expires=1728259200&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=RccYWGzRO2u4RPBpvykCDQ-Er7bLt8hPXPLsEsY~9IY0aohP25E4wmJq94ac2Oa5rv1UzXA1jdP-82YyyHXsQM1uHx7-W7FwiedBgAHErRu9wSKHGXYDCrT0DRTFATAf8xKEsxztyrFnUC1gVnocikW0716qE3ioWGCC0cgnq85amwf7N0-5i~BGlz~gHVBt~pO-ACuj6xOEgi7zr~J~oUOFK6DdQ6d4dj4qRb0vcZog~3CGE8~rkHFiL2lq4IctcobXnakJiLFPIzsHfISqZy7lJrV8laVbn1IE7nkGscqVyFrLccFjzNMD5f26qDmZ6urxVdisdUZinGrH2O7wKQ__" alt="Footer Logo" class="w-12 h-12 mb-2">
-                        <h3 class="text-xl font-bold">COMMERS FOOT SHOP</h3>
+                        <img src="/webpic/logo.png" alt="Footer Logo" class="w-12 h-12 mb-2">
+                        <h3 class="text-xl font-bold">COMMERS SHOES SHOP</h3>
                         <p class="text-sm">SLOGAN HERE</p>
                         <p class="text-sm mt-2">devilark2020@gmail.com</p>
                     </div>
