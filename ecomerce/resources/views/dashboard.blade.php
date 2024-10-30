@@ -152,13 +152,13 @@
                     </div>
 
                     <!-- Text Section -->
-                    <div class="text-center py-8">
+                    <div class="text-center py-20">
                         <h2 class="text-xl font-semibold text-gray-500">Nike Air Force 1 High 'Bubble Pop' Edition</h2>
                         <h1 class="text-4xl font-bold text-gray-800 mt-2">Pop Your Reality</h1>
                         <p class="text-gray-700 mt-4 px-6">
                         Make a statement with these eye-catching Nike Air Force 1 High sneakers featuring a playful bubble pattern design. The black and white color blocking is accented with vibrant neon green laces and multicolored polka dots, creating a perfect blend of classic style and modern pop art aesthetics.
                         </p>
-                        <a href="{{ route('shop.shopProduct') }}" class="mt-12 px-8 py-3 bg-black text-white font-semibold rounded-full hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-gray-800 focus:ring-opacity-50">
+                        <a href="{{ route('shop.shopProduct') }}" class="inline-block px-8 py-3 bg-black text-white font-semibold rounded-full hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-gray-800 focus:ring-opacity-50 mt-10">
                             Shop now
                         </a>
                     </div>

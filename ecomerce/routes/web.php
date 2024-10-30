@@ -129,6 +129,9 @@ Route::get('/sendUs', [ContactUsController::class, 'send'])->name('senD');
 Route::get('/cart', [CartController::class, 'view'])->name('cart.view');
 Route::post('/cart/add', [CartController::class, 'add'])->name('cart.add');
 
+Route::get('/contact', function () {
+    return view('contact');
+});
 
 // Product show route
 Route::get('products/{productId}', [ProductController::class, 'show'])->name('product.show');

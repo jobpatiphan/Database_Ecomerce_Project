@@ -10,7 +10,7 @@
                     <ul class="flex space-x-4">
                         <li><a href="{{ route('dashboard') }}" class="text-black">Home</a></li>
                         <li><a href="{{ route('shop.shopProduct') }}" class="text-black">Shop</a></li>
-                        <li><a href="#" class="text-black">Contact Us</a></li>
+                        <li><a href="/contact" class="text-black">Contact Us</a></li>
                         @if (Auth::user() && Auth::user()->is_admin)
                             <li><a href="{{ route('admin.products.index') }}" class="text-black">Admin Management</a></li>
                         @endif
@@ -52,7 +52,7 @@
                         </x-dropdown-link>
                         <form method="POST" action="{{ route('logout') }}">
                             @csrf
-                            <x-dropdown-link :href="route('logout')" onclick="event.preventDefault(); this.closest('form').submit();">
+                            <x-dropdown-link onclick="event.preventDefault(); this.closest('form').submit();">
                                 {{ __('Log Out') }}
                             </x-dropdown-link>
                         </form>
