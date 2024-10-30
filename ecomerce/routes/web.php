@@ -119,6 +119,8 @@ Route::post('/wishlist/remove', [WishlistController::class, 'removeFromWishlist'
 //Page shop 
 Route::get('/products', [ProductController::class, 'index'])->name('product.index');
 
+Route::get('/shop', [ProductController::class, 'index'])->name('shop.shopProduct');
+
 //Page contact 
 Route::get('/contactUs', [ContactUsController::class, 'Goto'])->name('contactUs.index');
 Route::get('/sendUs', [ContactUsController::class, 'send'])->name('senD');

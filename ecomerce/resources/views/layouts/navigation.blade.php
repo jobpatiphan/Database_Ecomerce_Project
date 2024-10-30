@@ -7,7 +7,7 @@
             <nav>
                 <ul class="flex space-x-4">
                     <li><a href="{{ route('dashboard') }}" class="text-black">Home</a></li>
-                    <li><a href="#" class="text-black">Shop</a></li>
+                    <li><a href="{{ route('shop.shopProduct') }}" class="text-black">Shop</a></li>
                     <li><a href="#" class="text-black">Contact Us</a></li>
                     @if (Auth::user() && Auth::user()->is_admin)
                         <li><a href="{{ route('admin.products.index') }}" class="text-black">Admin Management</a></li>
