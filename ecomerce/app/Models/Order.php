@@ -14,7 +14,9 @@ class Order extends Model
         'user_id', 
         //'Product id',
         //'product_amount',
-        'total_price'
+        'total_price',
+        'paid',
+        'session'
     ]; 
     protected $cast = [
         'date' => 'datetime',

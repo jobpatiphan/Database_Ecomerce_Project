@@ -10,9 +10,103 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\WishlistController;
 use App\Http\Controllers\AddressController;
+use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\AdminProductController;
+use App\Http\Controllers\AdminOrderController;
+use App\Models\User;
 use App\Http\Controllers\ContactUs;
 use App\Http\Controllers\ContactUsController;
 use App\Http\Controllers\FooterController;
+
+Route::get('/', function () {
+    if (Auth::check()) {
+        $user = User::find(auth()->id()); 
+        if (!$user)
+        {
+            return app(WelcomeController::class)->index();
+        }
+        else if ($user->is_admin) {
+            return redirect('/admin/products');
+        }
+        else {
+            return redirect('/com');
+    }
+}
+    else {
+        return app(WelcomeController::class)->index();
+    }
+
+});
+
+
+Route::middleware(['auth'])->group(function () {
+    Route::group([], function () {
+        Route::get('/admin/products', function () {
+            $user = User::find(auth()->id());
+            if ($user && $user->is_admin) {
+                return app(AdminProductController::class)->index();
+            }
+            abort(403, 'Unauthorized action.');
+        })->name('admin.products.index');
+
+        Route::get('/admin/products/create', function () {
+            $user = User::find(auth()->id());
+            if ($user && $user->is_admin) {
+                return app(AdminProductController::class)->create();
+            }
+            abort(403, 'Unauthorized action.');
+        })->name('admin.products.create');
+
+        Route::post('/admin/products', function (\Illuminate\Http\Request $request) {
+            $user = User::find(auth()->id());
+            if ($user && $user->is_admin) {
+                return app(AdminProductController::class)->store($request);
+            }
+            abort(403, 'Unauthorized action.');
+        })->name('admin.products.store');
+
+        Route::get('/admin/products/{product}/edit', function (App\Models\Product $product) {
+            $user = User::find(auth()->id());
+            if ($user && $user->is_admin) {
+                return app(AdminProductController::class)->edit($product);
+            }
+            abort(403, 'Unauthorized action.');
+        })->name('admin.products.edit');
+
+        Route::put('/admin/products/{product}', function (\Illuminate\Http\Request $request, App\Models\Product $product) {
+            $user = User::find(auth()->id());
+            if ($user && $user->is_admin) {
+                return app(AdminProductController::class)->update($request, $product);
+            }
+            abort(403, 'Unauthorized action.');
+        })->name('admin.products.update');
+
+        Route::delete('/admin/products/{product}', function (App\Models\Product $product) {
+            $user = User::find(auth()->id());
+            if ($user && $user->is_admin) {
+                return app(AdminProductController::class)->destroy($product);
+            }
+            abort(403, 'Unauthorized action.');
+        })->name('admin.products.destroy');
+
+        Route::get('/admin/orders', function () {
+            $user = User::find(auth()->id());
+            if ($user && $user->is_admin) {
+                return app(AdminOrderController::class)->index();
+            }
+            abort(403, 'Unauthorized action.');
+        })->name('admin.orders');
+
+        Route::post('/admin/orders/{order}/update-session', function (\Illuminate\Http\Request $request, App\Models\Order $order) {
+            $user = User::find(auth()->id());
+            if ($user && $user->is_admin) {
+                return app(AdminOrderController::class)->updateSession($request, $order);
+            }
+            abort(403, 'Unauthorized action.');
+        })->name('admin.orders.updateSession');
+    });
+});
+
 
 Route::put('/profile/address', [ProfileController::class, 'updateAddress'])->name('profile.updateAddress');
 
@@ -46,18 +140,10 @@ Route::get('products/{productId}', [ProductController::class, 'show'])->name('pr
 
 
 
-// Combined root route
-Route::get('/', function () {
-    return auth()->check() ? redirect('/commercefootshop') : app(WelcomeController::class)->index();
-})->name('welcome');
-
-
-
-
 Route::post('/profile/photo/update', [UserController::class, 'updateProfilePhoto'])->name('profile.photo.update');
 // Dashboard route with middleware
 Route::middleware(['auth', 'verified'])->group(function () {
-    Route::get('/commercefootshop', [DashboardController::class, 'index'])->name('dashboard');
+    Route::get('/com', [DashboardController::class, 'index'])->name('dashboard');
 });
 
 
@@ -75,12 +161,7 @@ Route::middleware('auth')->group(function () {
 });
 
 
-Route::get('/orders/{order}', [OrderController::class, 'getOrderEntries'])->name('order.show');
 
-Route::middleware('auth')->group(function () {
-    Route::post('/checkout', [OrderController::class, 'checkout'])->name('checkout');
-    Route::get('/order/success', [OrderController::class, 'orderSuccess'])->name('order.success');
-});
 
 Route::get('/cart', [CartController::class, 'index'])->name('profile.cart');
 
@@ -90,7 +171,7 @@ Route::post('/cart/increase', [CartController::class, 'increaseAmount'])->name('
 Route::post('/cart/decrease', [CartController::class, 'decreaseAmount'])->name('profile.decreaseAmount');
 //drop
 Route::delete('/cart/drop', [CartController::class, 'dropProduct'])->name('profile.drop');
-//checkout knack
+
 
 
 //wish list part
@@ -101,4 +182,19 @@ Route::delete('/wishlist/drop', [WishlistController::class, 'dropProduct'])->nam
 
 // Load authentication routes
 
-require __DIR__ . '/auth.php';
+Route::post('/order/paid/{id}', [OrderController::class, 'pay'])->name('profile.orderPayment');
+
+// Define your route to accept POST requests
+Route::delete('/order/cancel', [OrderController::class, 'cancel'])->name('profile.orderCancel');
+
+
+Route::get('/orders/{order}', [OrderController::class, 'getOrderEntries'])->name('order.show');
+
+Route::middleware('auth')->group(function () {
+    Route::post('/checkout', [OrderController::class, 'checkout'])->name('checkout');
+    Route::get('/order/success', [OrderController::class, 'orderSuccess'])->name('order.success');
+});
+
+Route::get('/history', [OrderController::class, 'indexHistory'])->name('history.show');
+
+require __DIR__.'/auth.php';

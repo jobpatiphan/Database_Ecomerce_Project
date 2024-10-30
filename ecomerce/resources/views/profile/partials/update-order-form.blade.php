@@ -4,6 +4,7 @@
         <h2 class="text-2xl font-bold mb-6">My Orders</h2>
         <div class="space-y-6">
             @foreach($orders as $order)
+            @if($order->session != 'success')
             <div class="flex justify-between items-center bg-white shadow-md rounded-lg p-4">
                 <div class="flex items-center">
                     
@@ -11,6 +12,14 @@
                         <h4 class="font-semibold">Order :{{ $order->id}}</h4>
                         <p class="font-bold">Total price :{{ $order->total_price }}</p>
                         <p class="font-bold">Time :{{ $order->created_at }}</p>
+                        @if($order->paid == 0)
+                            <p class="font-bold">Status : Unpaid</p>
+                        @elseif($order->paid == 1)
+                            <p class="font-bold">Status : Paid</p>
+                            <p class="font-bold">Session : {{ $order->session }}</p>
+                        @else
+                            <p class="font-bold">Unknown Status</p> <!-- Optional handling of any other cases -->
+                        @endif
                     </div>
                 </div>
 
@@ -31,6 +40,7 @@
                 </div>
                 
             </div>
+            @endif
             @endforeach
         </div>
     </section>
