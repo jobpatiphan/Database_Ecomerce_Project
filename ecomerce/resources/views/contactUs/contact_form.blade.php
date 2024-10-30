@@ -145,10 +145,6 @@
                         <a href="{{ route('senD') }}" class="green-background link-frame">Send Message</a>
                     </li>
                 </ul>
-
-
-
-
             </form>
         </div>
 
