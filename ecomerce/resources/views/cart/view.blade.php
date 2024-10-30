@@ -50,11 +50,7 @@
                 <tbody>
                     @foreach($cartItems as $item)
                         <tr>
-                            <td class="py-2 px-4 border-b">{{ $item->name }}</td>
-                            <td class="py-2 px-4 border-b">{{ $item->pivot->size }}</td>
-                            <td class="py-2 px-4 border-b">{{ $item->pivot->product_amount }}</td>
-                            <td class="py-2 px-4 border-b">${{ number_format($item->pivot->total_price, 2) }}</td>
-                            <td class="py-2 px-4 border-b">
+                        
                                 <!-- Form to remove the item, including product_id and size as hidden fields -->
                                 <form action="{{ route('cart.drop') }}" method="POST" class="inline">
                                     @csrf

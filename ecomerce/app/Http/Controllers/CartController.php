@@ -60,10 +60,10 @@ class CartController extends Controller
 
     public function dropProduct(Request $request)
 {
-    Log::info('Product ID: ' . $request->input('id'));
-    Log::info('Size: ' . $request->input('size'));
-    dd($request->all());
+    $productId = $request->input('id'); // Get the product id from the request
+    $size = $request->input('size'); // Get the size from the request
     $user = Auth::user(); // Get the authenticated user
+    
     
     // Detach the product with the specified size from the user's cart
     $user->products_in_cart()
