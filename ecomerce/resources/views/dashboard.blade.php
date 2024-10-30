@@ -158,10 +158,13 @@
                         <p class="text-gray-700 mt-4 px-6">
                         Make a statement with these eye-catching Nike Air Force 1 High sneakers featuring a playful bubble pattern design. The black and white color blocking is accented with vibrant neon green laces and multicolored polka dots, creating a perfect blend of classic style and modern pop art aesthetics.
                         </p>
-                        <a href="{{ route('shop.shopProduct') }}" class="mt-12 px-8 py-3 bg-black text-white font-semibold rounded-full hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-gray-800 focus:ring-opacity-50">
-                            Shop now
+                        <a href="{{ route('shop.shopProduct') }}">
+                            <button class="mt-8 px-8 py-3 bg-black text-white font-semibold rounded-full hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-gray-800 focus:ring-opacity-50">
+                                Shop now
+                            </button>
                         </a>
                     </div>
+
                 </div>
                 </section>
             </main>
