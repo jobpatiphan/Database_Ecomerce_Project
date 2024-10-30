@@ -18,7 +18,7 @@
                     alt="Logo" class="w-10 h-10 rounded-lg mr-4">
                 <nav>
                     <ul class="flex space-x-4">
-                        <li><a href="{{ route('dashboard') }}" class="text-black">Home</a></li>
+                        <li><a href="" class="text-black">Home</a></li>
                         <li><a href="{{ route('product.index') }}" class="text-black">Shop</a></li>
                         <li><a href="{{ route('contactUs.index') }}" class="text-black">Contact Us</a></li>
                     </ul>

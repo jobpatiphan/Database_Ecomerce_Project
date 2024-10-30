@@ -22,10 +22,10 @@ Route::put('/profile/address', [ProfileController::class, 'updateAddress'])->nam
 Route::post('/wishlist/add', [WishlistController::class, 'addToWishlist'])->name('wishlist.add');
 Route::post('/wishlist/remove', [WishlistController::class, 'removeFromWishlist'])->name('wishlist.remove');
 
-
-//Page shop 
-Route::get('/products', [ProductController::class, 'index'])->name('product.index');
-
+Route::middleware(['auth', 'verified'])->group(function () {
+    //Page shop 
+    Route::get('/products', [ProductController::class, 'index'])->name('product.index');
+});
 //Page contact 
 Route::get('/contactUs', [ContactUsController::class, 'Goto'])->name('contactUs.index');
 Route::get('/sendUs', [ContactUsController::class, 'send'])->name('senD');
