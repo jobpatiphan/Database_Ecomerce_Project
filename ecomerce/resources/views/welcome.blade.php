@@ -17,7 +17,7 @@
                     <nav>
                         <ul class="flex space-x-4">
                             <li><a href="/" class="text-black">Home</a></li>
-                            <li><a href="#" class="text-black">Shop</a></li>
+                            <li><a href="/shop" class="text-black">Shop</a></li>
                             <li><a href="/contact" class="text-black">Contact Us</a></li>
                         </ul>
                     </nav>

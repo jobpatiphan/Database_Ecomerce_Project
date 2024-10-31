@@ -169,9 +169,15 @@
                     <p class="text-gray-700">${{ number_format($product->price, 2) }}</p>
 
                     <!-- Link to Product Page -->
-                    <a href="{{ route('product.show', $product->id) }}" class="bg-black text-white px-4 py-2 rounded">
-                        View Product
-                    </a>
+                    @if (Auth::check())
+                                                <a href="{{ route('product.show', $product->id) }}" class="bg-black text-white px-4 py-2 rounded">
+                                                    View Product
+                                                </a>
+                                            @else
+                                                <a href="{{ route('login') }}" class="bg-black text-white px-4 py-2 rounded">
+                                                    Login to View Product
+                                                </a>
+                                            @endif
                 </div>
             @endforeach
         </div>
