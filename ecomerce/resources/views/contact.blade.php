@@ -109,30 +109,4 @@
         </div>
     </main>
 
-    <!-- Footer -->
-    <footer class="bg-black text-white py-12">
-        <div class="container mx-auto px-4">
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                <div>
-                    <img src="/webpic/logo.png" alt="Footer Logo" class="w-12 h-12 mb-4">
-                    <h3 class="text-xl font-bold mb-2">COMMERS FOOT SHOP</h3>
-                    <p class="text-gray-400 mb-2">SLOGAN HERE</p>
-                    <p class="text-gray-400">devil.graves15@gmail.com</p>
-                </div>
-                <div>
-                    <h3 class="text-lg font-bold mb-4">Follow Us</h3>
-                    <ul class="space-y-2">
-                        <li><a href="#" class="text-gray-400 hover:text-white transition">Instagram</a></li>
-                        <li><a href="#" class="text-gray-400 hover:text-white transition">Twitter</a></li>
-                        <li><a href="#" class="text-gray-400 hover:text-white transition">Facebook</a></li>
-                    </ul>
-                </div>
-                <div>
-                    <h3 class="text-lg font-bold mb-4">Contact Us</h3>
-                    <p class="text-gray-400 mb-2">123 Shoe St, City, State, 12345</p>
-                    <p class="text-gray-400">+1 234 567 890</p>
-                </div>
-            </div>
-        </div>
-    </footer>
 </x-app-layout>
