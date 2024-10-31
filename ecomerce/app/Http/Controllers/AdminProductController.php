@@ -22,6 +22,7 @@ class AdminProductController extends Controller
     }
 
     // Store a newly created product in storage
+    
     public function store(Request $request)
     {
         // Validate the request
