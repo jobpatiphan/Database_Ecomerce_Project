@@ -127,6 +127,11 @@
                                                 </svg>
                                                 <span class="text-gray-600 font-semibold">No address found. Please add an address before proceeding to checkout.</span>
                                             </div>
+                                            <div class="flex justify-end mt-4">
+                                                <a href="/profile" class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                                                    Add Address
+                                                </a>
+                                            </div>
                                         @else
                                             <div class="flex justify-end mt-6">
                                                 <form action="{{ route('checkout') }}" method="POST">

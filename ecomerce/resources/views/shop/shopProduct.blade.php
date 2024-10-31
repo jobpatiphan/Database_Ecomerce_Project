@@ -170,14 +170,14 @@
 
                     <!-- Link to Product Page -->
                     @if (Auth::check())
-                                                <a href="{{ route('product.show', $product->id) }}" class="bg-black text-white px-4 py-2 rounded">
-                                                    View Product
-                                                </a>
-                                            @else
-                                                <a href="{{ route('login') }}" class="bg-black text-white px-4 py-2 rounded">
-                                                    Login to View Product
-                                                </a>
-                                            @endif
+                        <a href="{{ route('product.show', $product->id) }}" class="bg-black text-white px-4 py-2 rounded">
+                            View Product
+                        </a>
+                    @else
+                        <a href="{{ route('login') }}" class="bg-black text-white px-4 py-2 rounded">
+                            Login to View Product
+                        </a>
+                    @endif
                 </div>
             @endforeach
         </div>

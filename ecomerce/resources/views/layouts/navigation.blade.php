@@ -2,11 +2,10 @@
     <!-- Primary Navigation Menu -->
     <header class="bg-white p-4 flex justify-between items-center">
         <div class="flex items-center">
-            <a href="{{ route('dashboard') }}">
-                <img src="/webpic/logo.png" alt="Logo" class="w-10 h-10 rounded-lg mr-4">
-            </a>
             @if (Auth::check())
-                <nav>
+                    <a href="{{ route('dashboard') }}">
+                        <img src="/webpic/logo.png" alt="Logo" class="w-10 h-10 rounded-lg mr-4">
+                    </a>
                     <ul class="flex space-x-4">
                         <li><a href="{{ route('dashboard') }}" class="text-black">Home</a></li>
                         <li><a href="{{ route('shop.shopProduct') }}" class="text-black">Shop</a></li>
@@ -15,11 +14,15 @@
                             <li><a href="{{ route('admin.products.index') }}" class="text-black">Admin Management</a></li>
                         @endif
                     </ul>
-                </nav>
             @else
-                <div class="alert alert-warning text-black p-2 rounded" role="alert">
-                    Please log in to access the navigation menu.
-                </div>
+                <a href="/">
+                    <img src="/webpic/logo.png" alt="Logo" class="w-10 h-10 rounded-lg mr-4">
+                </a>
+                <ul class="flex space-x-4">
+                        <li><a href="/" class="text-black">Home</a></li>
+                        <li><a href="{{ route('shop.shopProduct') }}" class="text-black">Shop</a></li>
+                        <li><a href="/contact" class="text-black">Contact Us</a></li>
+                </ul>
             @endif
         </div>
 
@@ -47,19 +50,20 @@
                     </button>
 
                     <div x-show="open" class="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-20">
-                        <x-dropdown-link :href="route('profile.edit')">
+                        <x-dropdown-link :href="route('profile.edit')" class="text-black hover:bg-black-200 hover:text-white py-2 px-4 rounded">
                             {{ __('Profile') }}
                         </x-dropdown-link>
                         <form method="POST" action="{{ route('logout') }}">
                             @csrf
-                            <x-dropdown-link onclick="event.preventDefault(); this.closest('form').submit();">
+                            <x-dropdown-link onclick="event.preventDefault(); this.closest('form').submit();" class="text-black hover:bg-black-200 hover:text-white py-2 px-4 rounded">
                                 {{ __('Log Out') }}
                             </x-dropdown-link>
                         </form>
                     </div>
                 </div>
             @else
-                <a href="{{ route('login') }}" class="text-gray-600">Log In</a>
+                <a href="{{ route('login') }}" class="text-black">Log In</a>
+                <a href="{{ route('register') }}" class="text-black">Register</a>
             @endif
         </div>
     </header>
