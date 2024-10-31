@@ -121,11 +121,11 @@
                                             <span class="font-medium text-gray-800" x-text="'$' + calculateTotal().toFixed(2)"></span>
                                         </div>
                                         @if ($user->address === null)
-                                            <div class="flex items-center justify-center h-full p-4 border border-yellow-400 bg-yellow-100 text-yellow-800 rounded-lg">
+                                            <div class="flex items-center justify-center h-full p-4 border border-red-500 bg-red-500 text-white rounded-lg">
                                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                                                     <path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4m0 4h.01M21 12c0 4.418-3.582 8-8 8s-8-3.582-8-8 3.582-8 8-8 8 3.582 8 8z" />
                                                 </svg>
-                                                <span class="text-gray-600 font-semibold">No address found. Please add an address before proceeding to checkout.</span>
+                                                <span class="text-white font-semibold">No address found. Please add an address before proceeding to checkout.</span>
                                             </div>
                                             <div class="flex justify-end mt-4">
                                                 <a href="/profile" class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
