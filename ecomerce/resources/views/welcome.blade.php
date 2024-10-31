@@ -87,7 +87,7 @@
 
         <section class="p-8" x-data="{ currentIndex: 0, productsPerPage: 2 }">
             <div class="flex justify-between items-center mb-4">
-                <h2 class="text-2xl font-bold">Shop by Categories</h2>
+                <h2 class="text-2xl font-bold">Trending</h2>
             </div>
 
             <div class="relative">
