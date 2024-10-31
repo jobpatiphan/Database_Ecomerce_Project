@@ -60,8 +60,6 @@
     </tbody>
 </table>
 
-<!-- Pagination Links -->
-{{ $products->links() }}
 @endsection
 
 @section('scripts')

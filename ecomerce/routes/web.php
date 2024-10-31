@@ -16,6 +16,7 @@ use App\Http\Controllers\AdminOrderController;
 use App\Models\User;
 use App\Http\Controllers\ContactUs;
 use App\Http\Controllers\ContactUsController;
+use App\Http\Controllers\CommentController;
 
 Route::get('/', function () {
     if (Auth::check()) {
@@ -159,40 +160,42 @@ Route::middleware('auth')->group(function () {
 });
 
 
-
-
-Route::get('/cart', [CartController::class, 'index'])->name('profile.cart');
-
-//increase
-Route::post('/cart/increase', [CartController::class, 'increaseAmount'])->name('profile.increaseAmount');
-//decrease
-Route::post('/cart/decrease', [CartController::class, 'decreaseAmount'])->name('profile.decreaseAmount');
-//drop
-Route::delete('/cart/drop', [CartController::class, 'dropProduct'])->name('profile.drop');
-
-
-
-//wish list part
-Route::get('/wishlist', [WishlistController::class, 'index'])->name('profile.wishList');
-
-//drop from wish list
-Route::delete('/wishlist/drop', [WishlistController::class, 'dropProduct'])->name('profile.dropWishlist');
-
-// Load authentication routes
-
-Route::post('/order/paid/{id}', [OrderController::class, 'pay'])->name('profile.orderPayment');
-
-// Define your route to accept POST requests
-Route::delete('/order/cancel', [OrderController::class, 'cancel'])->name('profile.orderCancel');
-
-
-Route::get('/orders/{order}', [OrderController::class, 'getOrderEntries'])->name('order.show');
-
 Route::middleware('auth')->group(function () {
+    Route::get('/cart', [CartController::class, 'index'])->name('profile.cart');
+
+        // Product show route
+    Route::get('products/{productId}', [ProductController::class, 'show'])->name('product.show');
+
+    Route::post('/product/{product}/comments', [CommentController::class, 'store'])->name('comments.store');
+    Route::delete('/comments/{comment}', [CommentController::class, 'destroy'])->name('comments.destroy');
+
+
+    //increase
+    Route::post('/cart/increase', [CartController::class, 'increaseAmount'])->name('profile.increaseAmount');
+    //decrease
+    Route::post('/cart/decrease', [CartController::class, 'decreaseAmount'])->name('profile.decreaseAmount');
+    //drop
+    Route::delete('/cart/drop', [CartController::class, 'dropProduct'])->name('profile.drop');
+
+    //wish list part
+    Route::get('/wishlist', [WishlistController::class, 'index'])->name('profile.wishList');
+
+    //drop from wish list
+    Route::delete('/wishlist/drop', [WishlistController::class, 'dropProduct'])->name('profile.dropWishlist');
+
+    // Load authentication routes
+    Route::post('/order/paid/{id}', [OrderController::class, 'pay'])->name('profile.orderPayment');
+
+    // Define your route to accept POST requests
+    Route::delete('/order/cancel', [OrderController::class, 'cancel'])->name('profile.orderCancel');
+
+    Route::get('/orders/{order}', [OrderController::class, 'getOrderEntries'])->name('order.show');
+
     Route::post('/checkout', [OrderController::class, 'checkout'])->name('checkout');
     Route::get('/order/success', [OrderController::class, 'orderSuccess'])->name('order.success');
+    Route::get('/history', [OrderController::class, 'indexHistory'])->name('history.show');
 });
 
-Route::get('/history', [OrderController::class, 'indexHistory'])->name('history.show');
+
 
 require __DIR__.'/auth.php';

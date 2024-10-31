@@ -40,6 +40,12 @@ class Product extends Model
         ->withTimestamps();
     }
 
+    public function comments()
+{
+    return $this->hasMany(Comment::class);
+}
+
+
 
     public function users_wish_list()
     {
@@ -58,4 +64,14 @@ class Product extends Model
     //                    ->withPivot('intensity') 
     //                    ->withTimestamps(); 
     //    } 
+
+    public function averageRating()
+{
+    return $this->comments()->avg('star') ?? 0;
+}
+
+public function totalReviews()
+{
+    return $this->comments()->count();
+}
 }
