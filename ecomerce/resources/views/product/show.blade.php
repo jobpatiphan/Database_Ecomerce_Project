@@ -91,25 +91,38 @@
                     <p class="text-xl text-gray-700">Price: ${{ number_format($product->price, 2) }}</p>
                     <p class="text-xl text-gray-700">Stock: {{ $product->stock }}</p>
 
+                    @guest
+                        <a href="{{ route('login') }}" class="focus:outline-none">
+                            <svg class="w-6 h-6 text-gray-400 cursor-pointer transition-colors duration-200" 
+                                 fill="currentColor" 
+                                 xmlns="http://www.w3.org/2000/svg" 
+                                 viewBox="0 0 24 24">
+                                <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+                            </svg>
+                        </a>
+                    @endguest
+
                     <!-- Heart Icon for Wishlist -->
-                    <form action="{{ $product->isInWishlist(Auth::user()) ? route('wishlist.remove') : route('wishlist.add') }}" 
-                          method="POST" 
-                          class="mt-4 flex items-center">
-                        @csrf
-                        <input type="hidden" name="product_id" value="{{ $product->id }}">
-                        <div x-data="{ favorite: {{ $product->isInWishlist(Auth::user()) ? 'true' : 'false' }} }">
-                            <label class="text-gray-700 mr-2">FAVORITE:</label>
-                            <button type="submit" class="focus:outline-none">
-                                <svg :class="favorite ? 'text-red-500' : 'text-gray-400'" 
-                                     class="w-6 h-6 cursor-pointer transition-colors duration-200" 
-                                     fill="currentColor" 
-                                     xmlns="http://www.w3.org/2000/svg" 
-                                     viewBox="0 0 24 24">
-                                    <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
-                                </svg>
-                            </button>
-                        </div>
-                    </form>
+                    @auth
+                        <form action="{{ $product->isInWishlist(Auth::user()) ? route('wishlist.remove') : route('wishlist.add') }}" 
+                              method="POST" 
+                              class="mt-4 flex items-center">
+                            @csrf
+                            <input type="hidden" name="product_id" value="{{ $product->id }}">
+                            <div x-data="{ favorite: {{ $product->isInWishlist(Auth::user()) ? 'true' : 'false' }} }">
+                                <label class="text-gray-700 mr-2">FAVORITE:</label>
+                                <button type="submit" class="focus:outline-none">
+                                    <svg :class="favorite ? 'text-red-500' : 'text-gray-400'" 
+                                         class="w-6 h-6 cursor-pointer transition-colors duration-200" 
+                                         fill="currentColor" 
+                                         xmlns="http://www.w3.org/2000/svg" 
+                                         viewBox="0 0 24 24">
+                                        <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+                                    </svg>
+                                </button>
+                            </div>
+                        </form>
+                    @endauth
 
                     <!-- Add to Cart Form -->
                     <form action="{{ route('cart.add') }}" method="POST" class="mt-6">
@@ -124,24 +137,33 @@
                                        value="1" 
                                        min="1" 
                                        max="{{ $product->stock }}" 
-                                       class="border border-gray-300 rounded-lg p-2 w-20">
+                                       class="border border-gray-300 rounded-lg p-2 w-20"
+                                       @guest disabled @endguest>
                             </div>
 
                             <div class="flex items-center space-x-2">
                                 <label for="size" class="text-gray-700">Size:</label>
                                 <select id="size" 
                                         name="size" 
-                                        class="border border-gray-300 rounded-lg p-2 w-20">
+                                        class="border border-gray-300 rounded-lg p-2 w-20"
+                                        @guest disabled @endguest>
                                     @for ($i = 36; $i <= 47; $i++)
                                         <option value="{{ $i }}">{{ $i }}</option>
                                     @endfor
                                 </select>
                             </div>
 
-                            <button type="submit" 
-                                    class="bg-blue-500 text-white px-6 py-2 rounded-lg hover:bg-blue-600 transition-colors duration-200">
-                                Add to Cart
-                            </button>
+                            @guest
+                                <a href="{{ route('login') }}" 
+                                   class="bg-blue-500 text-white px-6 py-2 rounded-lg hover:bg-blue-600 transition-colors duration-200">
+                                    Login to Add to Cart
+                                </a>
+                            @else
+                                <button type="submit" 
+                                        class="bg-blue-500 text-white px-6 py-2 rounded-lg hover:bg-blue-600 transition-colors duration-200">
+                                    Add to Cart
+                                </button>
+                            @endguest
                         </div>
                     </form>
                 </div>

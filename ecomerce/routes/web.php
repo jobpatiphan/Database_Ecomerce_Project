@@ -38,6 +38,8 @@ Route::get('/', function () {
 
 });
 
+Route::get('products/{productId}', [ProductController::class, 'show'])->name('product.show');
+
 
 Route::middleware(['auth'])->group(function () {
     Route::group([], function () {
@@ -164,7 +166,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/cart', [CartController::class, 'index'])->name('profile.cart');
 
         // Product show route
-    Route::get('products/{productId}', [ProductController::class, 'show'])->name('product.show');
+
 
     Route::post('/product/{product}/comments', [CommentController::class, 'store'])->name('comments.store');
     Route::delete('/comments/{comment}', [CommentController::class, 'destroy'])->name('comments.destroy');
