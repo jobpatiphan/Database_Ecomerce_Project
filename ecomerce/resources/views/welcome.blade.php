@@ -98,7 +98,7 @@
                             <div class="w-1/4 flex-none p-2">
                                 <div class="bg-gray-200 h-96 flex flex-col justify-between items-center p-4 rounded-lg">
                                     <img src="{{ asset('storage/' . $product->photo) }}" alt="{{ $product->name }}" class="w-full h-64 object-contain rounded-lg">
-                                    <h3 class="text-lg font-semibold">{{ Str::limit($product->name, 30, ' ...') }}</h3>
+                                    <h3 class="text-lg font-semibold">{{ Str::limit($product->name, 20, ' ...') }}</h3>
                                     <p class="text-gray-700">${{ number_format($product->price, 2) }}</p>
                                     @if (Auth::check())
                                         <a href="{{ route('product.show', $product->id) }}" class="bg-black text-white px-4 py-2 rounded">

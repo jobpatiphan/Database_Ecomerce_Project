@@ -103,8 +103,12 @@
             </div>
 
             <div class="text-center mt-16 bg-gray-50 py-8 rounded-lg">
-                <p class="text-xl font-medium mb-2">มหาวิทยาลัยเชียงใหม่</p>
-                <p class="text-lg text-gray-600">239 ถนนห้วยแก้ว ต.สุเทพ อ.เมือง จ.เชียงใหม่ 50200</p>
+                <p class="text-xl font-medium mb-2" style="font-family: 'Arial', sans-serif; letter-spacing: 1px; line-height: 1.5; text-shadow: 0.5px 0.5px 2px rgba(0, 0, 0, 0.1);">
+                    คณะวิศวกรรมศาตร์ สาขาวิศวคอมพิวเตอร์ มหาวิทยาลัยเชียงใหม่
+                </p>
+                <p class="text-lg text-gray-600" style="font-family: 'Arial', sans-serif; letter-spacing: 0.5px; line-height: 1.4;">
+                    239 ถนนห้วยแก้ว ต.สุเทพ อ.เมือง จ.เชียงใหม่ 50200
+                </p>
             </div>
         </div>
     </main>

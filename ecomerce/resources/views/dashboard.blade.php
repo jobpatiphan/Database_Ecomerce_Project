@@ -103,7 +103,7 @@
                                             <img src="{{ asset('storage/' . $product->photo) }}" alt="{{ $product->name }}" class="w-full h-64 object-contain rounded-lg">
 
                                             <!-- Product Name -->
-                                            <h3 class="text-lg font-semibold">{{ Str::limit($product->name, 30, ' ...') }}</h3>
+                                            <h3 class="text-lg font-semibold">{{ Str::limit($product->name, 20, ' ...') }}</h3>
 
                                             <!-- Product Price -->
                                             <p class="text-gray-700">${{ number_format($product->price, 2) }}</p>
