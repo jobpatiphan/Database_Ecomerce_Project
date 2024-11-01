@@ -198,27 +198,45 @@
                     </div>
 
                     <!-- Other Products Tab -->
-                    <div x-show="activeTab === 'otherProduct'" 
-                         x-data="{ currentIndex: 0, productsPerPage: 4 }">
-                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                            @foreach($products as $otherProduct)
-                                @if($otherProduct->id !== $product->id)
-                                    <div class="bg-white p-4 rounded-lg shadow-md">
-                                        <img src="{{ asset('storage/' . $otherProduct->photo) }}" 
-                                             alt="{{ $otherProduct->name }}" 
-                                             class="w-full h-48 object-contain rounded-lg">
-                                        <h3 class="mt-2 text-lg font-semibold">{{ Str::limit($otherProduct->name, 30) }}</h3>
-                                        <p class="text-gray-600">${{ number_format($otherProduct->price, 2) }}</p>
-                                        <a href="{{ route('product.show', $otherProduct->id) }}" 
-                                           class="mt-2 inline-block bg-black text-white px-4 py-2 rounded-lg hover:bg-gray-800 transition-colors duration-200">
-                                            View Product
-                                        </a>
-                                    </div>
-                                @endif
-                            @endforeach
-                        </div>
-                    </div>
+                    <div x-show="activeTab === 'otherProduct'">
+                        <h2 class="text-2xl font-bold">Other Products</h2>
+                        <section section class="p-8" x-data="{ currentIndex: 0, productsPerPage: 2 }">
+                            <div class="overflow-hidden">
+                                <div class="flex transition-transform" :style="'transform: translateX(-' + (currentIndex * (100 / productsPerPage)) + '%);'">
+                                    @foreach($products as $product)
+                                        <div class="w-1/4 flex-none p-2">
+                                            <div class="bg-gray-200 h-96 flex flex-col justify-between items-center p-4 rounded-lg">
+                                                <!-- Display Product Image -->
+                                                <img src="{{ asset('storage/' . $product->photo) }}" alt="{{ $product->name }}" class="w-full h-64 object-contain rounded-lg">
 
+                                                <!-- Product Name -->
+                                                <h3 class="text-lg font-semibold">{{ Str::limit($product->name, 30, ' ...') }}</h3>
+
+                                                <!-- Product Price -->
+                                                <p class="text-gray-700">${{ number_format($product->price, 2) }}</p>
+
+                                                <!-- Link to Product Page -->
+                                                <a href="{{ route('product.show', $product->id) }}" class="bg-black text-white px-4 py-2 rounded">
+                                                    View Product
+                                                </a>
+                                            </div>
+                                        </div>
+                                    @endforeach
+                                </div>
+                            </div>
+                            <div class="flex justify-between mt-4">
+                                <button @click="currentIndex = Math.max(currentIndex - productsPerPage, 0)"
+                                        class="bg-black text-white px-4 py-2 rounded-l-lg">
+                                    &larr; Previous
+                                </button>
+
+                                <button @click="currentIndex = Math.min(currentIndex + productsPerPage, Math.ceil({{ count($products) }} / productsPerPage) - 1)"
+                                        class="bg-black text-white px-4 py-2 rounded-r-lg">
+                                    Next &rarr;
+                                </button>
+                            </div>
+                        </section>
+                    </div>
                                         <!-- Reviews Tab Content -->
                     <div x-show="activeTab === 'reviews'" class="mt-8">
                         <h2 class="text-2xl font-bold mb-4">Reviews</h2>
