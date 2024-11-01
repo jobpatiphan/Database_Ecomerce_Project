@@ -226,12 +226,12 @@
                             </div>
                             <div class="flex justify-between mt-4">
                                 <button @click="currentIndex = Math.max(currentIndex - productsPerPage, 0)"
-                                        class="bg-black text-white px-4 py-2 rounded-l-lg">
+                                        class="bg-black text-white px-6 py-2 rounded-full hover:bg-gray-800 transition-colors">
                                     &larr; Previous
                                 </button>
 
                                 <button @click="currentIndex = Math.min(currentIndex + productsPerPage, Math.ceil({{ count($products) }} / productsPerPage) - 1)"
-                                        class="bg-black text-white px-4 py-2 rounded-r-lg">
+                                        class="bg-black text-white px-6 py-2 rounded-full hover:bg-gray-800 transition-colors">
                                     Next &rarr;
                                 </button>
                             </div>
